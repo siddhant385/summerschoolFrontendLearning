@@ -9,12 +9,35 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button"; // agar shadcn ka button hai
+import RegisterButton from "./RegisterButton";
+import { useAuth } from "@/context/auth";
+import { Button } from "./ui/button";
+import { UserWorkShopRegister } from "@/api/userworkshopapi";
+import { useState } from "react";
+import { toast } from "sonner"
 
-export const WorkshopCard = ({ workshop }) => {
+export const WorkshopCard = ({ workshop,isUserGiven }) => {
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const isEnrolled = isUserGiven || null;
+
+  async function RegisterForWorkShop() {
+    setLoading(true);
+    try {
+      const data = await UserWorkShopRegister({
+        workshop_id: workshop.id,
+      });
+      toast.success("Workshop registered successfully!");
+    } catch (err) {
+      toast.error(err.detail || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
   const {
     title,
     description,
+    scheduled_at,
     technologies,
     conducted_by,
     scheduled_at_ist,
@@ -23,7 +46,7 @@ export const WorkshopCard = ({ workshop }) => {
   } = workshop;
 
   return (
-    <div className="max-w-sm mx-auto my-4 h-50 h-full">
+    <div className="">
       <Card className="flex flex-col justify-between h-full">
         <CardHeader>
           <CardTitle>{title}</CardTitle>
@@ -40,22 +63,29 @@ export const WorkshopCard = ({ workshop }) => {
         <CardContent>
           <p className="font-medium">Conducted by: {conducted_by}</p>
           <p className="text-sm text-muted-foreground mt-1">
-            Scheduled at: {scheduled_at_ist} ({time_until_workshop})
+            Scheduled at: {scheduled_at_ist || scheduled_at} ({time_until_workshop || "Past"})
           </p>
         </CardContent>
 
         <CardFooter className="flex justify-between items-center">
           <CardAction>
+            {isEnrolled ? <Badge variant={ "destructive"}>
+              {"Enrolled"}
+            </Badge>:
             <Badge variant={is_upcoming ? "secondary" : "destructive"}>
               {is_upcoming ? "Upcoming" : "Past"}
             </Badge>
+            }
           </CardAction>
 
           {is_upcoming && (
-            <Button size="sm" variant="default">
-              Register Now
-            </Button>
+            user ? <Button size="sm" variant="default" onClick={RegisterForWorkShop} disabled={loading}>
+              {loading ? "Registering..." : "Register Now"}
+            </Button> :
+              <RegisterButton workshopId={workshop.id} />
           )}
+          
+
         </CardFooter>
       </Card>
     </div>

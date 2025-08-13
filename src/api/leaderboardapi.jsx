@@ -27,3 +27,14 @@ export const getLeaderboard = async (limit = 20, offset = 1, min_points = 0, tim
   }
 };
 
+
+export const getMyRank = async () => {
+  try {
+    const res = await apiClient.get("/leaderboard/me");
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || err.message;
+  }
+};
+
+
