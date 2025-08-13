@@ -10,6 +10,23 @@ export default function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(() => getSessionItem("user") || null);
     const navigate = useNavigate();
+    // src/utils/getURL.js
+    const getURL = () => {
+        const defaultUrl = 'http://localhost:5173'; // Vite ka default port
+
+        // Client-side: directly window ka origin le lo
+        if (typeof window !== 'undefined') {
+            return new URL('/', window.location.origin).toString(); // Always ends with /
+        }
+
+        // Server-side / build-time: Vite env se lo
+        const siteUrl = import.meta.env.VITE_SITE_URL; // Tum manually set karoge
+        const host = siteUrl ?? defaultUrl;
+        const withProtocol = host.startsWith('http') ? host : `https://${host}`;
+
+        return new URL('/', withProtocol).toString(); // Normalize + trailing slash
+    };
+
 
     // Function to create user in backend (for new logins)
     const createUser = async () => {
@@ -175,7 +192,7 @@ export default function AuthProvider({ children }) {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/dashboard`
+                    redirectTo: getURL() // Use the dynamic URL function
                 }
             });
             
