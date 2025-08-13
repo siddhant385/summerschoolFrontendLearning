@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/context/auth";
-import { Menu, User, Settings, LogOut, Home, Trophy } from "lucide-react";
+import { Menu, User, Settings, LogOut, Home, Trophy, BookOpen } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BookLoaderComponent } from "./Loader";
 
@@ -39,6 +39,11 @@ export default function Navbar() {
       path: user ? "/dashboard" : "/",
       label: user ? "Dashboard" : "Home",
       icon: Home,
+    },
+    { 
+      path: "/workshops", 
+      label: "Workshops",
+      icon: BookOpen,
     },
     { 
       path: "/leaderboard", 
