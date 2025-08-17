@@ -14,5 +14,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    allowedHosts: [
+      'devserver-unstable--summerschooljlug.netlify.app',
+      'localhost'
+    ]
+  },
   
 })
