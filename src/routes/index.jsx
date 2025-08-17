@@ -1,7 +1,3 @@
-
-
-
-
 import React from 'react';
 import { publicRoutes } from "./publicRoutes";
 import { privateRoutes } from "./privateRoutes";

@@ -16,8 +16,10 @@ import { Input } from "./ui/input"
 import { useState } from "react"
 import { GuestWorkShopRegister } from "@/api/userworkshopapi"
 import { toast } from "sonner"
+import { usePublic } from "@/context/public"
 
 function RegisterButton({ workshopId }) {
+    const {refreshAll} = usePublic()
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false)
     const [formData, setFormData] = useState({
@@ -43,6 +45,7 @@ function RegisterButton({ workshopId }) {
 
             toast.success(`Successfully registered for the workshop!`);
             setOpen(false); 
+            refreshAll();
             console.log("Guest registered:", data);
         } catch (err) {
             toast.error(err.detail ? JSON.stringify(err.detail) : "Something went wrong");
