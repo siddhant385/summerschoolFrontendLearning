@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/sonner"
 
 const MainLayout = ({ children }) => {
   return (
-    <div className="bg-background flex flex-col min-h-screen">
+    <div className="dark bg-background flex flex-col min-h-screen">
       <Toaster position="top-center" richColors />
       {/* Navbar */}
       <Navbar />
