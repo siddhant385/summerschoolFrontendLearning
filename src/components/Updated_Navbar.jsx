@@ -68,7 +68,7 @@ const Navbar = () => {
 
         {/* Title */}
         <div className="title">
-          <p className="heading text-xs md:text-xl">JEC LINUX USER GROUP</p>
+          <p className="heading text-xs md:text-xl text-black">JEC LINUX USER GROUP</p>
         </div>
 
         {/* Desktop Actions */}
