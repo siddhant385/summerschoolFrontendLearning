@@ -34,7 +34,6 @@ const FeedbackSection = () => {
 
                 <footer>
 
-
                     <nav>
                         <a href="#">Home</a> |
                         <a href="#">About</a> |
@@ -320,10 +319,9 @@ header {
 }
 
 
-
 footer {
   text-align: center;
-  margin: 5rem 0 5rem;
+  margin: 5rem 0 0;
   font-size: 0.85rem;
   color: #888;
 }

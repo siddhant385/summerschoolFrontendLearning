@@ -2,35 +2,6 @@ import React from 'react'
 import jlug_logo from '../assets/images/jlug_logo.png'
 
 const Navbar = () => {
-const { user, logout, loading } = useAuth();
-  const navigate = useNavigate();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  if (loading) return <BookLoaderComponent />;
-
-  // Avatar text fallback
-  const avatarText = user
-    ? (user.name || user.email || "U")[0].toUpperCase()
-    : "U";
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate("/");
-    } catch (error) {
-      console.error("Logout failed:", error);
-      // You can add toast notification here
-    }
-  };
-
-  const handleProfileClick = () => {
-    navigate("/profile");
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
     return (
 
         <>

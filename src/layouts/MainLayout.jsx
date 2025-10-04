@@ -12,8 +12,10 @@ const MainLayout = ({ children }) => {
       <div className="dark bg-background flex flex-col min-h-screen">
         <Toaster position="top-center" richColors />
         {/* <Navbar /> */}
-        <Updated_Navbar />
+        <div className="mb-[40px]">
 
+        <Updated_Navbar />
+        </div>
 
         {/* Page Content */}
         <main className="flex-1 container mx-auto px-4 py-6">
@@ -22,11 +24,14 @@ const MainLayout = ({ children }) => {
 
 
         {/* bottom navbar  */}
+        <div className="mb-10">
+
         <Bottom_Navbar />
+        </div>
 
 
         {/* Footer */}
-        <Footer />
+        {/* <Footer /> */}
       </div>
 
 

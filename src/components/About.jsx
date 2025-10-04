@@ -8,13 +8,13 @@ const About = () => {
 
     return (
         <>
-            <div className="text-white flex items-center justify-center min-h-screen px-4">
+            <div className="text-white flex items-center justify-center min-h-screen px-8">
                 <div class="max-w-md w-full space-y-10">
 
                     {/* <!-- Top Heading and Paragraph --> */}
 
-                    <div class="text-center space-y-4">
-                        <h1 class="text-[20px] text-gray-900 font-medium font-rosario tracking-[12%]" data-aos-duration="700">ABOUT THE PROGRAM
+                    <div class="text-center space-y-12">
+                        <h1 class="text-6xl text-gray-400 font-medium font-rosario" data-aos-duration="700">ABOUT THE PROGRAM
                         </h1>
                         <p class="text-sm mt-6 text-[#a2a2a2] font-inter leading-relaxed" data-aos-duration="700">
                             Learn from experts, work on real projects, and earn certification to showcase your skills. Our program

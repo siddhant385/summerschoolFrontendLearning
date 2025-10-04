@@ -58,18 +58,22 @@ const Home = () => {
   if (loading) return <p>Loading homepage...</p>;
 
   return (<>
-    <div className="container mx-auto p-4">
+    <div className=" mx-auto p-4">
 
       <div>
         {/* <Updated_HeroSection /> */}
 
       </div>
 
-      <HeroSection {...workshopStats} />
+      <div>
+        <HeroSection {...workshopStats} />
+      </div>
 
+<div className='my-10'>
       <About />
+</div>
 
-      <div className='p-4'>
+       <div className='p-4'>
 
         <h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance p-2 m-2 mb-4'>Upcoming Workshops</h1>
         <CarouselMenu
@@ -79,6 +83,7 @@ const Home = () => {
         />
       </div>
       <div className="p-4">
+        {/* Leaderboard component here */}
 
         <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance p-2 m-2 mb-4">Leaders of Summer School</h1>
         <Leaderboard
@@ -87,7 +92,6 @@ const Home = () => {
           maxRanks={5}
         />
 
-        {/* Leaderboard component here */}
       </div>
 
       <div>
@@ -95,7 +99,6 @@ const Home = () => {
         <FeatureCard isLoggedIn={false} />
       </div>
       <h1 className="text-2xl font-bold my-4">Features Card</h1>
-      {/* Features card component here */}
 
       <FeedbackSection />
 
