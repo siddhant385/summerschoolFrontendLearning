@@ -1,33 +1,45 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 export default function NotFound() {
   return (
-    <section className="flex flex-col items-center w-full py-12 text-center md:py-24">
+    <section className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950 px-4">
+      
+      {/* Illustration */}
       <img
-        src="/placeholder.svg"
-        width={400}
-        height={300}
-        alt="Illustration"
-        className="rounded-xl object-cover"
-        style={{ aspectRatio: "400 / 300", objectFit: "cover" }}
+        src="public/placeholder.svg"
+        alt="Lost illustration"
+        className="w-full max-w-md rounded-xl object-cover mb-8 animate-fadeIn"
       />
-      <div className="container flex flex-col items-center justify-center gap-2 px-4 md:gap-4 lg:gap-6">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-            Lost in the clouds
-          </h1>
-          <p className="text-gray-500 md:w-2/4 lg:w-1/2 xl:w-1/3 dark:text-gray-400">
-            Whoops, looks like you took a wrong turn. Let's get you back home.
-          </p>
-        </div>
-        <Link
-          to="/"
-          className="inline-flex h-9 items-center rounded-md border border-gray-200 bg-white px-4 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-950 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
-        >
-          Go back home
-        </Link>
-      </div>
+
+      {/* Card */}
+      <Card className="max-w-lg w-full text-center shadow-lg">
+        <CardContent className="space-y-4">
+          <CardTitle className="text-4xl font-bold text-gray-800 dark:text-gray-50">
+            Lost in the Clouds
+          </CardTitle>
+          <CardDescription className="text-gray-600 dark:text-gray-400">
+            Whoops! Looks like you took a wrong turn. Don't worry, we’ll get you back home.
+          </CardDescription>
+          <Link to="/">
+            <Button variant="default" className="mt-2">
+              Go Back Home
+            </Button>
+          </Link>
+        </CardContent>
+      </Card>
+
+      <style jsx>{`
+        .animate-fadeIn {
+          animation: fadeIn 1s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </section>
   );
 }

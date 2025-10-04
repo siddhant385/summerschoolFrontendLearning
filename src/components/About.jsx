@@ -9,12 +9,12 @@ const About = () => {
     return (
         <>
             <div className="text-white flex items-center justify-center min-h-screen px-8">
-                <div class="max-w-md w-full space-y-10">
+                <div class="max-w-4xl w-full space-y-10">
 
                     {/* <!-- Top Heading and Paragraph --> */}
 
                     <div class="text-center space-y-12">
-                        <h1 class="text-6xl text-gray-400 font-medium font-rosario" data-aos-duration="700">ABOUT THE PROGRAM
+                        <h1 class="text-3xl md:text-5xl lg:text-6xl text-gray-400 font-medium font-rosario" data-aos-duration="700">ABOUT THE PROGRAM
                         </h1>
                         <p class="text-sm mt-6 text-[#a2a2a2] font-inter leading-relaxed" data-aos-duration="700">
                             Learn from experts, work on real projects, and earn certification to showcase your skills. Our program
@@ -24,11 +24,11 @@ const About = () => {
 
                     {/* <!-- Cards Section --> */}
 
-                    <div class="space-y-6">
+                    <div class="space-y-6 md:grid md:grid-cols-2 md:justify-items-center md:gap-4">
 
                         {/* <!-- Expert Mentorship (slide from left) --> */}
 
-                        <div class="bg-[#33475b] text-white px-6 py-8 rounded-xl shadow-md text-center space-y-4" >
+                        <div class="bg-[#33475b] text-white px-6 py-8 rounded-xl shadow-md text-center space-y-4 md:" >
                             <div class="text-3xl">
                                 <img src={mentorship} alt="" class="mx-auto w-10 h-10" />
                             </div>
@@ -50,7 +50,16 @@ const About = () => {
 
                         {/* <!-- Certification (slide from bottom) --> */}
 
-                        <div class="bg-[#3a3b66] text-white px-6 py-8 rounded-xl shadow-md text-center space-y-4" >
+                        {/*<div class="bg-[#3a3b66] text-white px-6 py-8 rounded-xl shadow-md text-center space-y-4" >
+                            <div class="text-3xl">
+                                <img src={certification} alt="" class="mx-auto w-10 h-10" />
+                            </div>
+                            <h2 class="text-lg font-semibold tracking-wide font-rosario">Certification</h2>
+                            <p class="text-sm font-sansation text-gray-300">
+                                Earn recognized certificate that validate your newly acquired skills and knowledge.
+                            </p>
+                        </div>*/}
+                        <div class="bg-[#3a3b66] text-white px-6 py-8 rounded-xl shadow-md text-center space-y-4 md:col-span-2 md:justify-self-center">
                             <div class="text-3xl">
                                 <img src={certification} alt="" class="mx-auto w-10 h-10" />
                             </div>
@@ -60,23 +69,13 @@ const About = () => {
                             </p>
                         </div>
 
+
                     </div>
                 </div>
 
             </div>
 
-            <style jsx>{`
-            @import url('https://fonts.googleapis.com/css2?family=Rosario:ital,wght@0,300..700;1,300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-
-@import "tailwindcss";
-
-@theme {
-    --font-rosario : "Rosario", "sans-serif";
-    --font-inter : "Inter", "sans-serif";
-    --font-sansation : "Sansation", "sans-serif";
-} `}</style>
+            
 
         </>
     )

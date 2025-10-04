@@ -55,7 +55,8 @@ const Home = () => {
 
 body{
    
-    overflow: hidden;
+    overflow-x:hidden ;
+    overflow-y:auto;
 }
 
 html,body{

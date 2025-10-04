@@ -7,7 +7,7 @@ import AuthRedirect from "@/components/AuthRedirect";
 import MainLayout from "@/layouts/MainLayout";
 
 export const publicRoutes = [
-  { path: "/", element: <AuthRedirect toIfAuth="/dashboard" toIfGuest="/home" /> , layout: MainLayout},
+  { path: "/", element: <Home /> ,layout: MainLayout},
   { path: "/home", element: <Home /> ,layout: MainLayout},
   { path: "/leaderboard", element: <Leaderboard /> ,layout: MainLayout},
   { path: "/workshops", element: <Workshops /> ,layout: MainLayout},
