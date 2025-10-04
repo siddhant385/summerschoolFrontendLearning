@@ -64,8 +64,8 @@ export default function WorkshopList() {
       </div>
 
       {/* Workshop cards */}
-      {error && <p className="text-red-500 mb-4">Error: {error}</p>}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {error && <p className="text-red-500 mb-4 ">Error: {error}</p>}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
         {loading ? (
           <p>Loading workshops...</p> // Only cards area shows loading
         ) : workshops.length > 0 ? (

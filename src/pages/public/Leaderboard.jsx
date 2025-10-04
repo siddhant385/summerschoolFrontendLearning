@@ -61,7 +61,7 @@ const LeaderboardPage = () => {
       // Logged in user stats
       return (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <Card>
+          <Card >
             <CardContent className="p-4 text-center">
               <Users className="h-6 w-6 mx-auto mb-2 text-blue-500" />
               <p className="text-2xl font-bold">{leaderboardData.total_users}</p>
@@ -111,7 +111,7 @@ const LeaderboardPage = () => {
           
           <Card>
             <CardContent className="p-4 text-center">
-              <Trophy className="h-6 w-6 mx-auto mb-2 text-yellow-500" />
+              <Trophy className="h-6 w-6 mx-auto text-center mb-2 text-yellow-500" />
               <p className="text-2xl font-bold">{GuestleaderData.highest_points}</p>
               <p className="text-xs text-muted-foreground">Highest Points</p>
             </CardContent>
@@ -191,14 +191,14 @@ const LeaderboardPage = () => {
 
         {/* Login Prompt for Guests */}
         {!isLoggedIn && (
-          <Card className="mt-6 border-dashed">
-            <CardContent className="p-6 text-center">
-              <p className="text-muted-foreground mb-4">
+          <Card className="mt-10 w-[40%] mx-auto border-dashed">
+            <CardContent className="p-1 text-center">
+              <p className="text-muted-foreground text-sm mb-4">
                 Want to see the full leaderboard and your rank?
               </p>
               <button 
                 onClick={() => window.location.href = '/login'}
-                className="px-6 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
+                className="px-6 py-3 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
               >
                 Login to View More
               </button>

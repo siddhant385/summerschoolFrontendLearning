@@ -18,9 +18,9 @@ import {
 } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/context/auth";
+import { BookLoaderComponent } from "./Loader";
 import { Menu, User, Settings, LogOut, Home, Trophy, BookOpen } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { BookLoaderComponent } from "./Loader";
 
 export default function Navbar() {
   const { user, logout, loading } = useAuth();

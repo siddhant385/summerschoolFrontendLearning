@@ -3,9 +3,12 @@ import { getWorkshopsStats, getUpcomingWorkshops } from '@/api/workshopapi'
 import { CarouselMenu } from '@/components/CarouselMenu'
 import { FeatureCard } from '@/components/featureCard'
 import HeroSection from '@/components/HeroSection'
+import Updated_HeroSection from '@/components/Updated_HeroSection'
 import { Leaderboard } from '@/components/LeaderBoard'
 import { WorkshopCard } from '@/components/WorkshopCard'
 import React, { useState, useEffect } from 'react'
+import About from '@/components/About'
+import FeedbackSection from '@/components/FeedbackSection'
 
 
 const Home = () => {
@@ -54,11 +57,23 @@ const Home = () => {
 
   if (loading) return <p>Loading homepage...</p>;
 
-  return (
-    <div className="container mx-auto p-4">
-      <HeroSection {...workshopStats} />
+  return (<>
+    <div className=" mx-auto p-4">
 
-      <div className='p-4'>
+      <div>
+        {/* <Updated_HeroSection /> */}
+
+      </div>
+
+      <div>
+        <HeroSection {...workshopStats} />
+      </div>
+
+<div className='my-10'>
+      <About />
+</div>
+
+       <div className='p-4'>
 
         <h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance p-2 m-2 mb-4'>Upcoming Workshops</h1>
         <CarouselMenu
@@ -68,6 +83,7 @@ const Home = () => {
         />
       </div>
       <div className="p-4">
+        {/* Leaderboard component here */}
 
         <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance p-2 m-2 mb-4">Leaders of Summer School</h1>
         <Leaderboard
@@ -76,7 +92,6 @@ const Home = () => {
           maxRanks={5}
         />
 
-        {/* Leaderboard component here */}
       </div>
 
       <div>
@@ -84,11 +99,35 @@ const Home = () => {
         <FeatureCard isLoggedIn={false} />
       </div>
       <h1 className="text-2xl font-bold my-4">Features Card</h1>
-      {/* Features card component here */}
 
-      <h1 className="text-2xl font-bold my-4">Testimonials</h1>
-      {/* Testimonials component here */}
+      <FeedbackSection />
+
     </div>
+
+    <style jsx>{`
+    @import "tailwindcss";
+
+.bgg-blackk {
+    background-size: cover;
+    background-image: url('./assets/images/bg.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* Hides scrollbar but allows scrolling */
+::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    scrollbar-width: none;
+}
+
+body {
+    -ms-overflow-style: none;
+}`}</style>
+
+  </>
   )
 }
 

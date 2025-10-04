@@ -13,46 +13,38 @@ import { Button } from "@/components/ui/button";
 export default function HeroSection(props) {
 
   return (
-    <Card className="bg-card text-card-foreground shadow-xl mx-auto p-6 rounded-lg">
-      <CardHeader className="text-center">
+    <Card className="w-[60%] bg-card text-card-foreground shadow-xl mx-auto py-8 px-0 rounded-xl">
+      {/* <CardHeader className="text-center">
         <CardTitle className="text-4xl font-bold mb-2">
           Welcome To the Jlug Summer School
         </CardTitle>
-        <CardDescription className="text-lg mb-4">
+        <CardDescription className="text-lg mb-2">
           Learn cutting-edge technologies, join workshops, and level up your skills!
         </CardDescription>
-      </CardHeader>
-      <CardContent className="mt-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <div className="p-4 rounded-lg shadow">
-            <p className="text-2xl font-bold">{props.total_workshops}</p>
-            <p>Total Workshops</p>
+      </CardHeader> */}
+      <CardContent>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-center">
+          <div className="p-2 rounded-lg shadow">
+            <p className="text-4xl font-bold mb-3">{props.total_workshops}</p>
+            <p className="text-[#919191] text-xs" >Total Workshops</p>
           </div>
 
-          <div className="p-4 rounded-lg shadow">
-            <p className="text-2xl font-bold">{props.upcoming_workshops}</p>
-            <p>Upcoming Workshops</p>
+          <div className="p-2 rounded-lg shadow">
+            <p className="text-4xl font-bold mb-3">{props.upcoming_workshops}</p>
+            <p className="text-[#919191] text-xs"  >Upcoming Workshops</p>
           </div>
 
-          <div className="p-4 rounded-lg shadow">
-            <p className="text-2xl font-bold">{props.past_workshops}</p>
-            <p>Past Workshops</p>
+          <div className="p-2 rounded-lg shadow">
+            <p className="text-4xl font-bold mb-3">{props.past_workshops}</p>
+            <p className="text-[#919191] text-xs" >Past Workshops</p>
           </div>
 
-          <div className="p-4 rounded-lg shadow">
-            <p className="text-2xl font-bold">{props.active_instructors}</p>
-            <p>Active Instructors</p>
+          <div className="p-2 rounded-lg shadow">
+            <p className="text-4xl font-bold mb-3">{props.active_instructors}</p>
+            <p className="text-[#919191] text-xs" >Active Instructors</p>
           </div>
         </div>
       </CardContent>
-
-      <CardFooter className="flex justify-center mt-4">
-
-        <CardAction className="flex justify-center">
-          <Button variant="outline">Get Started</Button>
-        </CardAction>
-
-      </CardFooter>
 
     </Card>
   );
