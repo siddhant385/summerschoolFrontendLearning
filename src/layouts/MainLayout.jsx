@@ -4,7 +4,7 @@ import Updated_Navbar from "../components/Updated_Navbar"
 import Navbar from "../components/Navbar"
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner"
-import Bottom_Navbar from "@/components/Bottom_navbar";
+import Bottom_Navbar from "@/components/Bottom_Navbar";
 
 const MainLayout = ({ children }) => {
   return (
