@@ -1,6 +1,9 @@
 import { BookLoader } from "react-awesome-loaders";
 
 export const BookLoaderComponent = () => {
+    const messages = ['Loading your textbooks while you can drink water','Creating something magical for you Please have patience','Eat 5 star do nothing and wait till it loads','Please wait while we prepare something amazing for you...']
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
             {/* Animated background elements */}
@@ -31,7 +34,7 @@ export const BookLoaderComponent = () => {
                         ...
                     </h2>
                     <p className="text-white/70 text-sm md:text-base font-light tracking-wide">
-                        Please wait while we prepare something amazing for you...
+                        {randomMessage}
                     </p>
                 </div>
                 
