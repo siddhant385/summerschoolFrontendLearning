@@ -1,11 +1,10 @@
-
-import './App.css'
+import React from "react";
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 function StartLearning() {
     useGSAP(() => {
-        gsap.from('svg', {
+        gsap.from(' .buttonsvg', {
             x: 170,          // smaller value for flexible movement
             rotate: 360,
             duration: 3,
@@ -29,6 +28,8 @@ function StartLearning() {
         <>
 
             <div className="button">
+              <div className="buttonsvg">
+
                 <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.5 0L13.6956 8.49535L23 10.5L13.6956 12.5046L11.5 21L9.30443 12.5046L0 10.5L9.30443 8.49535L11.5 0Z" fill="url(#paint0_linear_480_85)" />
                     <path d="M11.5 0L13.6956 8.49535L23 10.5L13.6956 12.5046L11.5 21L9.30443 12.5046L0 10.5L9.30443 8.49535L11.5 0Z" fill="url(#paint1_linear_480_85)" fill-opacity="0.41" />
@@ -43,6 +44,8 @@ function StartLearning() {
                         </linearGradient>
                     </defs>
                 </svg>
+              
+              </div>
                 <div className="btnTitle font-Inter">Start Learning</div>
             </div>
 
@@ -91,7 +94,7 @@ html, body {
   white-space: nowrap;
 }
 
-.button svg {
+.buttonsvg {
   height: 25px;
   width: 25px;
   flex-shrink: 0;
