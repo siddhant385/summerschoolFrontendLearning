@@ -6,19 +6,20 @@ import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner"
 import Bottom_Navbar from "@/components/Bottom_Navbar";
 
+
 const MainLayout = ({ children }) => {
   return (
     <>
-      <div className="dark bg-background flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen">
         <Toaster position="top-center" richColors />
         {/* <Navbar /> */}
         <div className="mb-[40px]">
 
-        <Updated_Navbar />
+          <Updated_Navbar />
         </div>
 
         {/* Page Content */}
-        <main className="flex-1 container mx-auto px-4 py-6">
+        <main className="flex-1 container ">
           {children}
         </main>
 
@@ -26,7 +27,7 @@ const MainLayout = ({ children }) => {
         {/* bottom navbar  */}
         <div className="mb-10">
 
-        <Bottom_Navbar />
+          <Bottom_Navbar />
         </div>
 
 
@@ -35,7 +36,6 @@ const MainLayout = ({ children }) => {
       </div>
 
 
- 
 
     </>
   );

@@ -18,7 +18,7 @@ const Home = () => {
 
             {/* <!-- ====logo==== --> */}
 
-            <div className="logo-container">
+            <div className="logo-container mx-auto mb-4">
                 <div className="bg">
                     <img className='rotate-center' src={color} alt="" />
                 </div>
@@ -30,10 +30,10 @@ const Home = () => {
             {/* <!-- ====content==== --> */}
             <div className="content">
                 <div>
-                    <p className="jlug-summer">JLUG SUMMER</p>
+                    <p className="jlug-summer mb-7">JLUG SUMMER</p>
                 </div>
                 <div>
-                    <p className="school-program ">SCHOOL PROGRAM</p>
+                    <p className="school-program">SCHOOL PROGRAM</p>
                 </div>
                 <div className="message">
                     <p className="transform mt-[3vh]">Transform your skill with expert-led workshop, hands-on projects , and a vibrant learning community</p>
@@ -72,19 +72,11 @@ html,body{
     background-repeat: no-repeat;
 } */
 
-.jlug-summer{
-    margin: 3vh 0 2vh;
-}
-
-
-/* ==========nav================= */
-
 /* ==========logo container============ */
 .logo-container {
     position: relative;
     width: clamp(180px, 25vw, 240px);
     height: clamp(180px, 25vw, 240px);
-    margin: 7.5vh auto 0;
 }
 
 /* Rotating background image */
@@ -106,6 +98,7 @@ html,body{
 }
 
 /* Main logo */
+
 .logo-wrapper {
     position: relative;
     width: 100%;
@@ -148,6 +141,7 @@ html,body{
 
 
 /* =============content============= */
+
 .content{
     color: #ffff;
     display: flex;
@@ -162,16 +156,15 @@ html,body{
 
 .jlug-summer{
     font-family: "League Gothic", sans-serif;
-    font-size: clamp(24px, 6vw, 40px);
+    font-size: clamp(60px, 6vw, 40px);
     font-weight: 500;
     letter-spacing: clamp(2px, 1.5vw, 5px);
-    margin-bottom: 0.5rem;
     text-transform: uppercase;
 }
 
 .school-program{
 font-family: "Rosario", sans-serif;
-font-size: clamp(18px, 4vw, 30px);
+font-size: clamp(12px, 4vw, 30px);
 font-weight: lighter;
 letter-spacing: clamp(1px, 1vw, 2px);
 background: linear-gradient(45deg, #E7F122, #25C6DF, #E7F122, #25C6DF);
@@ -181,7 +174,6 @@ animation: conicLoop 3s linear infinite reverse;
 background-clip: text;
 color: transparent; 
 text-transform: uppercase;
-margin-top: 0;
  text-shadow: 0 0 30px rgba(231, 241, 34, 0.5);
 }
 

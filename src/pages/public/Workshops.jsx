@@ -76,6 +76,24 @@ export default function WorkshopList() {
           <p>No workshops found.</p>
         )}
       </div>
+
+      <style jsx>{`
+            /* For Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* For Firefox */
+html {
+    scrollbar-width: none;
+}
+
+/* For IE and Edge Legacy */
+body {
+    -ms-overflow-style: none;
+}
+            `}</style>
+
     </div>
   );
 }
