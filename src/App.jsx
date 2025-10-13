@@ -10,7 +10,6 @@ function App() {
   const element = useRoutes(routes);
   const {loading} = useAuth();
   return (
-    loading ? <BookLoaderComponent/> :
     <>
       {element}
     </>

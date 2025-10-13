@@ -1,116 +1,129 @@
-import React, { createContext, useState, useEffect } from "react";
-import { useAuth } from "./auth";
-import { getSessionItem,removeSessionItem,setSessionItem } from "@/utils/localUtils";
-import { getMyRank } from "@/api/leaderboardapi";
-import { getMyWorkshops } from "@/api/userworkshopapi";
-import { getMyAssignments } from "@/api/assignmentapi";
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { getMyWorkshops } from '@/api/userworkshopapi';
+import { getMyProfile, getMyProfileStatus } from '@/api/userapi';
+import { getLeaderboard, getMyRank } from '@/api/leaderboardapi';
+import { getMyAssignments } from '@/api/assignmentapi';
+import { getMyReviews } from '@/api/reviewapi'; // top pe import
+
+import { useAuth } from './auth';
+import { setLocalItem, getLocalItem } from '@/utils/localUtils';
 
 export const PrivateContext = createContext();
-export default function PublicProvider({ children }) {
-	const {user,logout} = useAuth();
 
-	const [enrolledWorkshops,setEnrolledWorkshops] = useState(() => getSessionItem("enrolledWorkshops") || []);
-	const [leaderboardUser,setleaderboardUser] = useState(() => getSessionItem("leaderboardUser") || []);
-	const [assignments, setAssignments] = useState(() => getSessionItem("assignments") || []);
-	const [loading, setLoading] = useState(false);
+export const PrivateProvider = ({ children }) => {
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [myWorkshops, setMyWorkshops] = useState(getLocalItem("myWorkshops"));
+  const [profile, setProfile] = useState(getLocalItem("profile"));
+  const [profileStatus, setProfileStatus] = useState(getLocalItem("profileStatus"));
+  const [leaderboard, setLeaderboard] = useState(getLocalItem("leaderboard"));
+  const [myRank, setMyRank] = useState(getLocalItem("myRank"));
+  const [myAssignments, setMyAssignments] = useState(getLocalItem("myAssignments"));
+  const [myReviews, setMyReviews] = useState(getLocalItem("myReviews"));
 
 
-	const fetchUserRank = async () => {
+  const fetchLeaderboardData = async () => {
       setLoading(true);
       try {
-        const data = await getMyRank();
-
-        console.log(data.data.user_rank)
-        setSessionItem("leaderboardUser",data.data.user_rank);
-        setleaderboardUser(data.data.user_rank);
-        // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
-
-
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchEnrolledWorkshops = async () => {
-      setLoading(true);
-      try {
-        const data = await getMyWorkshops();
-        console.log(data.workshops)
-        setSessionItem("enrolledWorkshops",data.workshops)
-        setEnrolledWorkshops(data.workshops); // backend ke hisaab se
-
-
-      } catch (err) {
-        console.log(err);
-      } finally {
+        // yaha tu params de sakta hai
+        const data = await getLeaderboard(20, 0, 0, "all_time"); 
+        setLeaderboard(data.data); // backend ke hisaab se
+        setLocalItem("leaderboard",data.data)
         
-      }
-    };
-
-    const fetchAssignments = async () => {
-      setLoading(true);
-      try {
-        const data = await getMyAssignments();
-        console.log(data)
-        setSessionItem("assignments",data.data.assignments);
-        setAssignments(data.data.assignments); // backend ke hisaab se
-        // setleaderboardUser(data.data.user_rank);
-        // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
-
 
       } catch (err) {
-        console.log(err);
+        setError(err);
       } finally {
         setLoading(false);
       }
     };
 
-    useEffect(() => {
-    const fetchAll = async () => {
-      setLoading(true);
-      await Promise.all([
-        fetchUserRank(),
-        fetchAssignments(),
-        fetchEnrolledWorkshops()
-      ]);
-      setLoading(false);
-    };
-    fetchAll();
-  }, []);
-    const refreshAll = async () => {
-      setLoading(true);
-      await Promise.all([
-        fetchData(),           // workshops
-        fetchStats(),          // stats
-        fetchTopPerformers(),  // top performers
-        fetchUpcomingWorkshops() // upcoming
-      ]);
-      setLoading(false);
-    };
+  useEffect(() => {
+    let isActive = true;
+    const fetchUserData = async () => {
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const [
+          myWorkshopData,
+          profileData,
+          profileStatusData,
+          leaderboardData,
+          rankData,
+          assignmentsData,
+          reviewsData
+        ] = await Promise.all([
+          getMyWorkshops(),
+          getMyProfile(),
+          getMyProfileStatus(),
+          getLeaderboard(),
+          getMyRank(),
+          getMyAssignments(),
+          getMyReviews()
+        ]);
+        if (isActive) {
+          setLocalItem("myWorkshops", myWorkshopData);
+          setLocalItem("profile", profileData.data);
+          setLocalItem("profileStatus", profileStatusData.data);
+          setLocalItem("leaderboard", leaderboardData.data);
+          setLocalItem("myRank", rankData.data);
+          setLocalItem("myAssignments", assignmentsData.data);
+          setLocalItem("myReviews", reviewsData.data.reviews);
 
 
-    return (
-    <PrivateContext.Provider
-      value={{
-        enrolledWorkshops,
-        loading,
-        assignments,
-        leaderboardUser,
-        refreshAll
-      }}
-    >
+
+          setMyWorkshops(myWorkshopData);
+          setProfile(profileData.data);
+          setProfileStatus(profileStatusData.data);
+          setLeaderboard(leaderboardData.data);
+          setMyRank(rankData.data);
+          setMyAssignments(assignmentsData.data);
+          setMyReviews(reviewsData.data);
+        } else {
+          console.log('Fetch result ignored — user logged out meanwhile.');
+        }
+      } catch (err) {
+        console.error('Error fetching private data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+    return () => {
+      isActive = false;
+    };
+  }, [user]);
+
+  const contextValue = {
+    myWorkshops,
+    myReviews,
+    profile,
+    profileStatus,
+    leaderboard,
+    fetchLeaderboardData,
+    error,
+    myRank,
+    myAssignments,
+    loading,
+    isAuthenticated: !!user,
+  };
+
+  return (
+    <PrivateContext.Provider value={contextValue}>
       {children}
     </PrivateContext.Provider>
   );
-
-}
-export const usePrivate = () => {
-    const context = React.useContext(PrivateContext);
-    if (context === undefined) {
-        throw new Error('usePublic must be used within a PublicProvider');
-    }
-    return context;
 };
 
+export const usePrivate = () => {
+  const context = useContext(PrivateContext);
+  if (!context) throw new Error('usePrivate must be used within a PrivateProvider');
+  return context;
+};

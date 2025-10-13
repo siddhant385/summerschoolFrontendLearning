@@ -3,6 +3,16 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
+import { DialogButton } from "./RegisterAssignmentButton";
+
+
+
+
+
+
+
+
+
 
 export default function AssignmentCard({ assignment }) {
     const formatDate = (dateString) => {
@@ -34,11 +44,10 @@ export default function AssignmentCard({ assignment }) {
             </CardHeader>
             <CardContent>
                 <div className="space-y-3 md:space-y-4">
+
                     <div className="flex flex-col space-y-2 md:flex-row md:items-center md:justify-between md:space-y-0">
                         {assignment.submit_link === null ? 
-                        <Button variant="outline" size="sm" asChild>
-                            <span>Submit</span>
-                        </Button>
+                        <DialogButton ButtonName={"Submit"} workshopId={assignment.workshop_id} submit_link={assignment.submit_link} title={assignment.title}/>
                         :
                         <div className="flex items-center space-x-2">
                         <Button variant="outline" size="sm" asChild>
@@ -52,9 +61,7 @@ export default function AssignmentCard({ assignment }) {
                                 <span>View Submission</span>
                             </a>
                         </Button>
-                        <Button variant="outline" size="sm" asChild>
-                                <span>ReSubmit</span>
-                        </Button>
+                        <DialogButton ButtonName={"Edit Response"} workshopId={assignment.workshop_id} submit_link={assignment.submit_link} title={assignment.title}/>
                         </div>}
                         
                         
