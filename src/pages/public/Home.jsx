@@ -1,5 +1,3 @@
-import { getTopPerformers } from "@/api/leaderboardapi";
-import { getWorkshopsStats, getUpcomingWorkshops } from "@/api/workshopapi";
 import { CarouselMenu } from "@/components/CarouselMenu";
 import { FeatureCard } from "@/components/featureCard";
 import HeroSection from "@/components/HeroSection";
@@ -9,49 +7,54 @@ import { WorkshopCard } from "@/components/WorkshopCard";
 import React, { useState, useEffect } from "react";
 import About from "@/components/About";
 import FeedbackSection from "@/components/FeedbackSection";
+import { usePublic } from "@/context/public";
 
 const Home = () => {
-  const [workshops, setWorkshops] = useState([]);
-  const [workshopStats, setWorkshopStats] = useState([]);
-  const [topPerformer, setTopPerformer] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [workshops, setWorkshops] = useState([]);
+  // const [workshopStats, setWorkshopStats] = useState([]);
+  const {workshopStats,topPerformer,workshops,upcomingWorkshops} = usePublic();
+  // const [topPerformer, setTopPerformer] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const topPerformers = topPerformer.top_three
+  // const workshops = workshops || []
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const data = await getWorkshopsStats();
-        console.log(data.data);
-        setWorkshopStats(data.data);
-      } catch (error) {
-        console.error("Error fetching workshop stats:", error);
-      }
-    };
 
-    const fetchTopPerformers = async () => {
-      try {
-        const data = await getTopPerformers();
-        setTopPerformer(data.data.top_three);
-        console.log(data.data.top_three);
-      } catch (error) {
-        console.error("Error fetching top performers:", error);
-      }
-    };
+  // useEffect(() => {
+  //   // const fetchStats = async () => {
+  //   //   try {
+  //   //     const data = await getWorkshopsStats();
+  //   //     console.log(data.data);
+  //   //     setWorkshopStats(data.data);
+  //   //   } catch (error) {
+  //   //     console.error("Error fetching workshop stats:", error);
+  //   //   }
+  //   // };
 
-    const fetchWorkshops = async () => {
-      try {
-        const data = await getUpcomingWorkshops(5);
-        setWorkshops(data.data);
-      } catch (err) {
-        console.error("Error fetching upcoming workshops:", err);
-      } finally {
-        setLoading(false); // loading sirf yahan handle kar rahe
-      }
-    };
+  //   const fetchTopPerformers = async () => {
+  //     try {
+  //       const data = await getTopPerformers();
+  //       setTopPerformer(data.data.top_three);
+  //       console.log(data.data.top_three);
+  //     } catch (error) {
+  //       console.error("Error fetching top performers:", error);
+  //     }
+  //   };
 
-    fetchStats();
-    fetchTopPerformers();
-    fetchWorkshops();
-  }, []);
+  //   const fetchWorkshops = async () => {
+  //     try {
+  //       const data = await getUpcomingWorkshops(5);
+  //       setWorkshops(data.data);
+  //     } catch (err) {
+  //       console.error("Error fetching upcoming workshops:", err);
+  //     } finally {
+  //       setLoading(false); // loading sirf yahan handle kar rahe
+  //     }
+  //   };
+
+  //   // fetchStats();
+  //   fetchTopPerformers();
+  //   fetchWorkshops();
+  // }, []);
 
   if (loading) return <p>Loading homepage...</p>;
 
@@ -79,7 +82,7 @@ const Home = () => {
           </h1>
 
           <CarouselMenu
-            items={workshops.map((workshop) => (
+            items={upcomingWorkshops.map((workshop) => (
               <WorkshopCard key={workshop.id} workshop={workshop} />
             ))}
           />
@@ -94,7 +97,7 @@ const Home = () => {
           </h1>
           <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance p-2 m-2 mb-4"></h1>
           <Leaderboard
-            users={topPerformer}
+            users={topPerformers}
             title="Top Performers"
             maxRanks={5}
           />

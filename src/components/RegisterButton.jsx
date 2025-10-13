@@ -23,7 +23,7 @@ function RegisterButton({ workshopId }) {
     const [formData, setFormData] = useState({
         "name": "",
         "email": "",
-        "workshop_id": workshopId
+        "workshop_id": workshopId,
     });
 
     const handleChange = (e) => {

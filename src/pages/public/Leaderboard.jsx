@@ -5,52 +5,55 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, Trophy, Users, Target } from "lucide-react";
 import { getLeaderboard, getTopPerformers } from '@/api/leaderboardapi';
 import { useAuth } from '@/context/auth';
+import { usePublic } from '@/context/public';
+import { usePrivate } from '@/context/private';
 
 const LeaderboardPage = () => {
   const { user } = useAuth();
-  const [leaderboardData, setLeaderboardData] = useState(null);
-  const [GuestleaderData, setGuestleaderData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const {topPerformer} = usePublic();
+  const {leaderboard,fetchLeaderboardData,loading,error} = usePrivate();
+  const leaderboardData = leaderboard;
+  // const [GuestleaderData, setGuestleaderData] = useState(null);
+  const GuestleaderData = topPerformer;
   
   // Check if user is logged in (you can replace this with your auth logic)
   const isLoggedIn = !!user; // Replace with your auth check
   useEffect(() => {
-    isLoggedIn ? fetchLeaderboardData():fetchGuestData();
+    isLoggedIn ? fetchLeaderboardData():console.log("Hello");
     
   }, [isLoggedIn]);
 
-      const fetchLeaderboardData = async () => {
-      setLoading(true);
-      try {
-        // yaha tu params de sakta hai
-        const data = await getLeaderboard(20, 0, 0, "all_time"); 
-        console.log(data)
-        setLeaderboardData(data.data); // backend ke hisaab se
+      // const fetchLeaderboardData = async () => {
+      // setLoading(true);
+      // try {
+      //   // yaha tu params de sakta hai
+      //   const data = await getLeaderboard(20, 0, 0, "all_time"); 
+      //   console.log(data)
+      //   setLeaderboardData(data.data); // backend ke hisaab se
         
 
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+      // } catch (err) {
+      //   setError(err);
+      // } finally {
+      //   setLoading(false);
+      // }
+    // };
 
-    const fetchGuestData = async () => {
-      setLoading(true);
-      try {
-        // yaha tu params de sakta hai
-        const data = await getTopPerformers(); 
-        console.log(data.data)
-        setGuestleaderData(data.data); // backend ke hisaab se
+    // const fetchGuestData = async () => {
+    //   setLoading(true);
+    //   try {
+    //     // yaha tu params de sakta hai
+    //     const data = await getTopPerformers(); 
+    //     console.log(data.data)
+    //     setGuestleaderData(data.data); // backend ke hisaab se
         
 
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    //   } catch (err) {
+    //     setError(err);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
     
 
 
@@ -134,10 +137,10 @@ const LeaderboardPage = () => {
     if (!leaderboardData && !GuestleaderData) return [];
 
     // Return appropriate data based on login status
-    return isLoggedIn ? leaderboardData.entries : GuestleaderData.top_three;
+    return isLoggedIn ? leaderboardData?.entries : GuestleaderData.top_three;
   }; leaderboardData
 
-  if (loading) {
+  if (!leaderboard) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">

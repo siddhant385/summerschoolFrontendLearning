@@ -1,40 +1,26 @@
 import { useEffect, useState } from "react";
-import { getWorkshops } from "@/api/workshopapi";
 import { WorkshopCard } from "@/components/WorkshopCard";
 import { Input } from "@/components/ui/input";
+import { usePublic } from '@/context/public';
+
 
 export default function WorkshopList() {
-  const [workshops, setWorkshops] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  const { workshops, loading, error, fetchWorkshops } = usePublic();
   // Filters
   const [search, setSearch] = useState("");
   const [technology, setTechnology] = useState("");
   const [instructor, setInstructor] = useState("");
+  const loadings = false;
+
+
 
   // Fetch workshops whenever filters change
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      try {
-        const data = await getWorkshops({
-          search,
-          technology,
-          instructor,
-          page: 1,
-          page_size: 20,
-        });
-        setWorkshops(data.workshops);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
+    fetchWorkshops({ search, technology, instructor, page: 1, page_size: 20 });
   }, [search, technology, instructor]);
+
+  // if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="p-4">
@@ -66,7 +52,7 @@ export default function WorkshopList() {
       {/* Workshop cards */}
       {error && <p className="text-red-500 mb-4 ">Error: {error}</p>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-        {loading ? (
+        {loadings ? (
           <p>Loading workshops...</p> // Only cards area shows loading
         ) : workshops.length > 0 ? (
           workshops.map((workshop) => (

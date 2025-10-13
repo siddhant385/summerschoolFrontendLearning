@@ -10,7 +10,7 @@ const Bottom_Navbar = () => {
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    if (loading) return <BookLoaderComponent />;
+    // if (loading) return <BookLoaderComponent />;
 
     // Avatar text fallback
     const avatarText = user

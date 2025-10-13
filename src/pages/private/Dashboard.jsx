@@ -6,20 +6,29 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { WorkshopCard } from '@/components/WorkshopCard';
-import { useEffect } from 'react';
-import { getMyWorkshops } from '@/api/userworkshopapi';
 import { useAuth } from '@/context/auth';
-import { getMyRank } from '@/api/leaderboardapi';
-import { getMyAssignments } from '@/api/assignmentapi';
 import AssignmentCard from '@/components/AssignmentCard';
+import { usePrivate } from '@/context/private';
+import { ReviewButton } from '@/components/ReviewButton';
+
+
 
 const WorkshopDashboard = () => {
   // Sample data based on your schema
   const {user} = useAuth()
-  const [enrolledWorkshops,setEnrolledWorkshops] = useState([]);
-  const [leaderboardUser,setleaderboardUser] = useState([]);
-  const [assignments, setAssignments] = useState([]);
-  const [loading, setLoading] = useState(false);
+
+  const {leaderboard,myAssignments,loading,myWorkshops,myRank,myReviews} = usePrivate()
+  // const [enrolledWorkshops,setEnrolledWorkshops] = useState([]);
+  // const [leaderboardUser,setleaderboardUser] = useState([]);
+  // const [assignments, setAssignments] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  console.log(myReviews);
+  const enrolledWorkshops = myWorkshops?.workshops || []
+  const leaderboardUser = myRank?.user_rank || {}
+  const assignments = myAssignments?.assignments || []
+
+
+
 
 
   // const [user] = useState({
@@ -30,59 +39,59 @@ const WorkshopDashboard = () => {
   //   profile_complete: true,
   //   rank: 5 // From leaderboard calculation
   // });
-  useEffect(() => {
-    // Fetch enrolled workshops from API or state management
-    const fetchEnrolledWorkshops = async () => {
-      setLoading(true);
-      try {
-        const data = await getMyWorkshops();
-        console.log(data.workshops)
-        setEnrolledWorkshops(data.workshops); // backend ke hisaab se
+  // useEffect(() => {
+  //   // Fetch enrolled workshops from API or state management
+  //   const fetchEnrolledWorkshops = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const data = await getMyWorkshops();
+  //       console.log(data.workshops)
+  //       setEnrolledWorkshops(data.workshops); // backend ke hisaab se
 
 
-      } catch (err) {
-        console.log(err);
-      } finally {
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
         
-      }
-    };
+  //     }
+  //   };
 
-    const fetchUserRank = async () => {
-      setLoading(true);
-      try {
-        const data = await getMyRank();
-        console.log(data.data.user_rank)
-        setleaderboardUser(data.data.user_rank);
-        // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
-
-
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    const fetchAssignments = async () => {
-      setLoading(true);
-      try {
-        const data = await getMyAssignments();
-        console.log(data)
-        setAssignments(data.data.assignments); // backend ke hisaab se
-        // setleaderboardUser(data.data.user_rank);
-        // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
+  //   const fetchUserRank = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const data = await getMyRank();
+  //       console.log(data.data.user_rank)
+  //       setleaderboardUser(data.data.user_rank);
+  //       // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
 
 
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAssignments();
-    fetchEnrolledWorkshops();
-    fetchUserRank();
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   const fetchAssignments = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const data = await getMyAssignments();
+  //       console.log(data)
+  //       setAssignments(data.data.assignments); // backend ke hisaab se
+  //       // setleaderboardUser(data.data.user_rank);
+  //       // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
 
-  }, []);
+
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchAssignments();
+  //   fetchEnrolledWorkshops();
+  //   fetchUserRank();
+
+  // }, []);
 
   // const [enrolledWorkshops] = useState([
   //   {
@@ -129,13 +138,6 @@ const WorkshopDashboard = () => {
   // ]);
 
   const [certificates] = useState([
-    {
-      id: 1,
-      workshop_title: "JavaScript Fundamentals",
-      certificate_url: "https://example.com/cert1.pdf",
-      created_at: "2025-07-30T12:00:00",
-      technologies: ["JavaScript", "ES6"]
-    }
   ]);
 
   const [reviews] = useState([
@@ -170,8 +172,8 @@ const WorkshopDashboard = () => {
       />
     ));
   };
-
   return (
+
     <div className="min-h-screen bg-background p-3 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
         
@@ -293,30 +295,37 @@ const WorkshopDashboard = () => {
 
           {/* Reviews Tab - Mobile Responsive */}
           <TabsContent value="reviews" className="space-y-4 mt-4 md:mt-6">
-            {reviews.map((review) => (
-              <Card key={review.id}>
-                <CardHeader className="pb-3">
-                  <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:items-start md:space-y-0">
-                    <CardTitle className="text-base md:text-lg">{review.workshop_title}</CardTitle>
-                    <div className="flex items-center space-x-1">
-                      {renderStars(review.rating)}
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="mb-3 md:mb-4 text-sm md:text-base">{review.review_description}</p>
-                  <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:items-center md:space-y-0">
-                    <span className="text-xs md:text-sm text-muted-foreground">
-                      {formatDate(review.created_at)}
-                    </span>
-                    <Button variant="ghost" size="sm">
-                      Edit Review
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </TabsContent>
+  {myReviews?.reviews?.length > 0 ? (
+    myReviews.reviews.map((review) => (
+      <Card key={review.id}>
+        <CardHeader className="pb-3">
+          <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:items-start md:space-y-0">
+            <CardTitle className="text-base md:text-lg">
+              {review.workshop_title || "Review"}
+            </CardTitle>
+            <div className="flex items-center space-x-1">
+              {renderStars(review.rating)}
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <p className="mb-3 md:mb-4 text-sm md:text-base">
+            {review.review_description}
+          </p>
+          <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:items-center md:space-y-0">
+            <span className="text-xs md:text-sm text-muted-foreground">
+              {formatDate(review.created_at)}
+            </span>
+            <ReviewButton ButtonName={"Edit Review"} Edit={true} review_id={review.id}/>
+          </div>
+        </CardContent>
+      </Card>
+    ))
+  ) : (
+    <p className="text-center text-muted-foreground">No reviews yet 😶</p>
+  )}
+</TabsContent>
+
         </Tabs>
       </div>
     </div>
