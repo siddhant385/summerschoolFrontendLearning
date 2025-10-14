@@ -6,8 +6,10 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use(async (config) => {
-  const { data: { session } } = await supabase.auth.getSession();
-  const token = session?.access_token || null;
+  // const { data: { session } } = await supabase.auth.getSession();
+  const {data,error} = await supabase.auth.getSession();
+  const token = data?.session?.access_token || null;
+
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
