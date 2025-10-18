@@ -53,6 +53,19 @@ export const PrivateProvider = ({ children }) => {
     }
   };
 
+  const fetchMyAssignments = async () => {
+    setLoading(true);
+    try {
+      const data = await getMyAssignments();
+      setMyAssignments(data.data);
+      setLocalItem("myAssignments", data.data);
+    }catch(err){
+      setError(err);
+    }finally{
+      setLoading(false);
+    }
+  };
+
   const fetchMyWorkshops = async () => {
     setLoading(true);
     try {
@@ -136,6 +149,7 @@ export const PrivateProvider = ({ children }) => {
     fetchLeaderboardData,
     fetchmyReviews,
     fetchMyWorkshops,
+    fetchMyAssignments,
     error,
     myRank,
     myAssignments,

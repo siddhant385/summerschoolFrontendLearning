@@ -22,7 +22,7 @@ export const WorkshopCard = ({ workshop,isUserGiven }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const isEnrolled = isUserGiven || null;
-  const {fetchMyWorkshops} = usePrivate()
+  const {fetchMyWorkshops,fetchMyAssignments} = usePrivate()
 
   async function RegisterForWorkShop() {
     setLoading(true);
@@ -32,6 +32,7 @@ export const WorkshopCard = ({ workshop,isUserGiven }) => {
       });
       toast.success("Workshop registered successfully!");
       fetchMyWorkshops();
+      fetchMyAssignments();
     } catch (err) {
       toast.error(err.detail || "Something went wrong");
     } finally {
