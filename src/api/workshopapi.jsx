@@ -47,3 +47,12 @@ export const getUpcomingWorkshops = async (limit) => {
     throw err.response?.data || err.message;
   }
 };
+
+export const getWorkshopById = async (workshop_id) => {
+  try{
+    const res = await apiClient.get(`/workshops/${workshop_id}`);
+    return res.data;
+  }catch (err) {
+    throw err.response?.data || err.message;
+  }
+};

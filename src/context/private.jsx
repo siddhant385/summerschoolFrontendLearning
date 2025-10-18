@@ -40,6 +40,19 @@ export const PrivateProvider = ({ children }) => {
       }
     };
 
+  const fetchmyReviews = async () => {
+    setLoading(true);
+    try {
+      const data = await getMyReviews();
+      setMyReviews(data.data);
+      setLocalItem("myReviews",data.data);
+    }catch(err){
+      setError(err);
+    }finally{
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     let isActive = true;
     const fetchUserData = async () => {
@@ -74,7 +87,7 @@ export const PrivateProvider = ({ children }) => {
           setLocalItem("leaderboard", leaderboardData.data);
           setLocalItem("myRank", rankData.data);
           setLocalItem("myAssignments", assignmentsData.data);
-          setLocalItem("myReviews", reviewsData.data.reviews);
+          setLocalItem("myReviews", reviewsData.data);
 
 
 
@@ -108,6 +121,7 @@ export const PrivateProvider = ({ children }) => {
     profileStatus,
     leaderboard,
     fetchLeaderboardData,
+    fetchmyReviews,
     error,
     myRank,
     myAssignments,
