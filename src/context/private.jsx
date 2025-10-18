@@ -28,10 +28,10 @@ export const PrivateProvider = ({ children }) => {
       setLoading(true);
       try {
         // yaha tu params de sakta hai
-        const data = await getLeaderboard(20, 0, 0, "all_time"); 
+        const data = await getLeaderboard(); 
+        console.log(data)
         setLeaderboard(data.data); // backend ke hisaab se
-        setLocalItem("leaderboard",data.data)
-        
+        setLocalItem("leaderboard",data.data);
 
       } catch (err) {
         setError(err);
@@ -46,6 +46,19 @@ export const PrivateProvider = ({ children }) => {
       const data = await getMyReviews();
       setMyReviews(data.data);
       setLocalItem("myReviews",data.data);
+    }catch(err){
+      setError(err);
+    }finally{
+      setLoading(false);
+    }
+  };
+
+  const fetchMyWorkshops = async () => {
+    setLoading(true);
+    try {
+      const data = await getMyWorkshops();
+      setMyWorkshops(data);
+      setLocalItem("myWorkshops",data);
     }catch(err){
       setError(err);
     }finally{
@@ -122,6 +135,7 @@ export const PrivateProvider = ({ children }) => {
     leaderboard,
     fetchLeaderboardData,
     fetchmyReviews,
+    fetchMyWorkshops,
     error,
     myRank,
     myAssignments,

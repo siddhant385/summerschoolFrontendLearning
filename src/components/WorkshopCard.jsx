@@ -16,11 +16,13 @@ import { UserWorkShopRegister } from "@/api/userworkshopapi";
 import { useState } from "react";
 import { toast } from "sonner"
 import { ReviewButton } from "./ReviewButton";
+import { usePrivate } from "@/context/private";
 
 export const WorkshopCard = ({ workshop,isUserGiven }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const isEnrolled = isUserGiven || null;
+  const {fetchMyWorkshops} = usePrivate()
 
   async function RegisterForWorkShop() {
     setLoading(true);
@@ -29,6 +31,7 @@ export const WorkshopCard = ({ workshop,isUserGiven }) => {
         workshop_id: workshop.id,
       });
       toast.success("Workshop registered successfully!");
+      fetchMyWorkshops();
     } catch (err) {
       toast.error(err.detail || "Something went wrong");
     } finally {

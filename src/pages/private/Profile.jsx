@@ -200,7 +200,7 @@ const UserProfile = () => {
   // const [leaderboardUser,setleaderboardUser] = useState([]);
   // const [assignments, setAssignments] = useState([]);
   // const [loading, setLoading] = useState(false);
-  console.log(myReviews);
+  console.log(myAssignments);
   const enrolledWorkshops = myWorkshops?.workshops || [];
   const leaderboardUser = myRank?.user_rank || {};
   const assignments = myAssignments?.assignments || [];
@@ -297,6 +297,7 @@ const UserProfile = () => {
 
         setTopTechnologies(techArray);
       }
+
     }, [enrolledWorkshops]);
 
   // User stats from various tables
@@ -307,6 +308,21 @@ const UserProfile = () => {
     reviewsGiven: 0,
     averageRating: 0,
   });
+
+  const averageRating = () => {
+    const reviews = myReviews?.reviews || [];
+    if (reviews.length === 0) return 0; // agar reviews nahi hai
+
+    const total = reviews.reduce((sum, rev) => sum + (rev.rating || 0), 0);
+    return total / reviews.length;
+  };
+  const submittedAssignmentsCount = () => {
+    const assignments = myAssignments?.assignments || [];
+    return assignments.filter(a => a.submit_link).length;
+  };
+
+
+
 
   // Recent activity
   const [recentActivity] = useState([
@@ -455,7 +471,7 @@ const UserProfile = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-3 bg-purple-50 rounded-lg">
                   <div className="text-2xl font-bold text-purple-600">
-                    {stats.completedAssignments}
+                    {submittedAssignmentsCount()}
                   </div>
                   <div className="text-sm text-muted-foreground">
                     Assignments Submitted
@@ -463,7 +479,7 @@ const UserProfile = () => {
                 </div>
                 <div className="text-center p-3 bg-yellow-50 rounded-lg">
                   <div className="text-2xl font-bold text-yellow-600">
-                    {stats.reviewsGiven}
+                    {myReviews?.total_count}
                   </div>
                   <div className="text-sm text-muted-foreground">
                     Reviews Given
@@ -472,7 +488,7 @@ const UserProfile = () => {
               </div>
               <div className="text-center p-3 bg-gray-50 rounded-lg">
                 <div className="text-lg font-bold text-gray-600">
-                  ★ {stats.averageRating}/5.0
+                  ★ {averageRating()}/5.0
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Average Rating Given

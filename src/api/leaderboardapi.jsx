@@ -11,7 +11,7 @@ export const getTopPerformers = async () => {
   }
 };
 
-export const getLeaderboard = async (limit = 20, offset = 1, min_points = 0, time_period = "all_time") => {
+export const getLeaderboard = async (limit = 20, offset = 0, min_points = 0, time_period = "all_time") => {
   try {
     const res = await apiClient.get("/leaderboard/", {
       params: {

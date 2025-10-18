@@ -27,6 +27,7 @@ import { useAuth } from "@/context/auth";
 import AssignmentCard from "@/components/AssignmentCard";
 import { usePrivate } from "@/context/private";
 import { ReviewButton } from "@/components/ReviewButton";
+import { useEffect } from "react";
 
 const WorkshopDashboard = () => {
   // Sample data based on your schema
@@ -36,6 +37,7 @@ const WorkshopDashboard = () => {
     leaderboard,
     myAssignments,
     loading,
+    fetchmyReviews,
     myWorkshops,
     myRank,
     myReviews,
@@ -57,6 +59,10 @@ const WorkshopDashboard = () => {
   //   profile_complete: true,
   //   rank: 5 // From leaderboard calculation
   // });
+    useEffect(() =>{
+      fetchmyReviews();
+
+    },[]);
   // useEffect(() => {
   //   // Fetch enrolled workshops from API or state management
   //   const fetchEnrolledWorkshops = async () => {
@@ -253,7 +259,7 @@ const WorkshopDashboard = () => {
                 </div>
                 <div className="space-y-1">
                   <div className="text-xl md:text-2xl font-bold text-purple-600">
-                    {reviews.length}
+                    {myReviews?.total_count}
                   </div>
                   <div className="text-xs md:text-sm text-muted-foreground">
                     Reviews
@@ -369,7 +375,7 @@ const WorkshopDashboard = () => {
                   <CardHeader className="pb-3">
                     <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:items-start md:space-y-0">
                       <CardTitle className="text-base md:text-lg">
-                        {review.workshop_title || "Review"}
+                        {review.title || "Review"}
                       </CardTitle>
                       <div className="flex items-center space-x-1">
                         {renderStars(review.rating)}
