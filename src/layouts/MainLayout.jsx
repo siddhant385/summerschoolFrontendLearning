@@ -5,11 +5,12 @@ import Navbar from "../components/Navbar"
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner"
 import Bottom_Navbar from "@/components/Bottom_Navbar";
+import bg from '@/assets/images/bg.jpg'
 
 const MainLayout = ({ children }) => {
   return (
     <>
-      <div className="dark bg-background flex flex-col min-h-screen">
+      <div className="dark mt-3 flex flex-col min-h-screen bgg-blackk overflow-y-scroll w-[100vw] mx-auto ">
         <Toaster position="top-center" richColors />
         {/* <Navbar /> */}
         <div className="mb-[40px]">
@@ -32,6 +33,32 @@ const MainLayout = ({ children }) => {
 
         {/* Footer */}
         {/* <Footer /> */}
+
+
+        <style jsx>{`
+              .bgg-blackk {
+            background-size: cover;
+            background-image: url(${bg});
+            background-attachment: fixed;
+            // background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
+        
+        
+        /* Hides scrollbar but allows scrolling */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        html {
+            scrollbar-width: none;
+        }
+        
+        body {
+            -ms-overflow-style: none;
+        }
+              `}</style>
       </div>
 
 

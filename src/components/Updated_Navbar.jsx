@@ -72,13 +72,13 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Actions */}
-        <div className="hidden md:flex items-center space-x-4 z-10">
+        <div className="hidden md:flex items-center space-x-4 z-10 ">
           {user ? (
-            <DropdownMenu>
+            <DropdownMenu className="">
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="relative h-8 w-8 rounded-full hover:ring-2 hover:ring-indigo-500"
+                  className="relative h-8 w-8 rounded-full  hover:ring-2 hover:ring-indigo-500"
                 >
                   <Avatar className="h-8 w-8">
                     <AvatarImage
@@ -137,7 +137,7 @@ const Navbar = () => {
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
-                className="p-2"
+                className="p-2 text-black hover:rounded-3xl max-sm:mr-[-13px]"
               >
                 <Menu className="h-6 w-6" />
               </Button>
@@ -199,7 +199,7 @@ const Navbar = () => {
                     onClick={() => {
                       navigate("/login");
                       closeMobileMenu();
-                    }}
+                    }} className="mx-6"
                   >
                     Login
                   </Button>
@@ -279,6 +279,7 @@ const Navbar = () => {
         .heading {
           font-weight: 1000;
           margin: 0;
+        
         }
       `}</style>
     </>

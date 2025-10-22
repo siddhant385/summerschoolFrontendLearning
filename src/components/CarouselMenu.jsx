@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate} from "react-router-dom";
 import {
   Carousel,
   CarouselContent,
@@ -15,7 +16,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+
 export const CarouselMenu = ({ items, title = "Upcoming Workshops" }) => {
+  const navigate=useNavigate();
+
+  const viewMoreclick=()=>{
+navigate("/workshops");
+}
   return (
     <Card className="shadow-lg">
       <CardContent>
@@ -33,7 +40,7 @@ export const CarouselMenu = ({ items, title = "Upcoming Workshops" }) => {
       </CardContent>
 
       <CardFooter className="justify-center">
-        <Button variant="outline">View More</Button>
+        <Button variant="outline" onClick={viewMoreclick}>View More</Button>
       </CardFooter>
     </Card>
   );

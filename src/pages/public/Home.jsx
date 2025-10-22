@@ -61,7 +61,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="bgg-blackk overflow-y-scroll w-[100vw] mx-auto px-10">
+      <div className="overflow-y-scroll w-[100vw] mx-auto px-10">
         <div className="h-[100vh]  pt-[8vh]">
           <Updated_HeroSection />
         </div>

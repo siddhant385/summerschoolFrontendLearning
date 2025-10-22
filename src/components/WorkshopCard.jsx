@@ -52,9 +52,9 @@ export const WorkshopCard = ({ workshop,isUserGiven }) => {
   } = workshop;
 
   return (
-    <div className="">
-      <Card className="flex flex-col justify-between h-full">
-        <CardHeader>
+    <div >
+      <Card className="flex flex-col justify-between items-start  max-md:items-start max-sm:items-start h-full ">
+        <CardHeader className=" w-full ">
           <CardTitle>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>
           <div className="flex flex-wrap gap-2 mt-2">
@@ -73,12 +73,12 @@ export const WorkshopCard = ({ workshop,isUserGiven }) => {
           </p>
         </CardContent>
 
-        <CardFooter className="flex justify-between items-center">
+        <CardFooter className="flex justify-between gap-5 max-sm:gap-2 max-sm:flex-col">
           <CardAction>
             {isEnrolled ? <Badge variant={ "destructive"}>
               {"Enrolled"}
             </Badge>:
-            <Badge variant={is_upcoming ? "secondary" : "destructive"}>
+            <Badge className="p-[9px]" variant={is_upcoming ? "secondary" : "destructive"}>
               {is_upcoming ? "Upcoming" : "Past"}
             </Badge>
             }
