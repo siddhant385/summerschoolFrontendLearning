@@ -49,8 +49,8 @@ export default function AssignmentCard({ assignment }) {
                         {assignment.submit_link === null ? 
                         <DialogButton ButtonName={"Submit"} workshopId={assignment.workshop_id} submit_link={assignment.submit_link} title={assignment.title}/>
                         :
-                        <div className="flex items-center space-x-2">
-                        <Button variant="outline" size="sm" asChild>
+                        <div className="flex items-center space-x-2 gap-2 max-sm:gap-2.5 max-sm:items-start max-sm:flex-col">
+                        <Button variant="outline" size="sm" asChild >
                             <a
                                 href={assignment.submit_link}
                                 target="_blank"
