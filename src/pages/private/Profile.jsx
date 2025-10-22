@@ -24,6 +24,8 @@ import { useAuth } from "@/context/auth";
 import { getMyRank } from "@/api/leaderboardapi";
 import { getMyAssignments } from "@/api/assignmentapi";
 import { getMyWorkshops } from "@/api/userworkshopapi";
+import { usePrivate } from "@/context/private";
+
 
 // const WorkshopDashboard = () => {
 // Sample data based on your schema
@@ -181,11 +183,27 @@ import { getMyWorkshops } from "@/api/userworkshopapi";
 
 const UserProfile = () => {
   const { user } = useAuth();
-  const [leaderboardUser, setleaderboardUser] = useState([]);
-  const [enrolledWorkshops, setEnrolledWorkshops] = useState([]);
+  // const [leaderboardUser, setleaderboardUser] = useState([]);
+  // const [enrolledWorkshops, setEnrolledWorkshops] = useState([]);
   const [topTechnologies, setTopTechnologies] = useState([]);
-  const [assignments, setAssignments] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [assignments, setAssignments] = useState([]);
+  // const [loading, setLoading] = useState(false);
+    const {
+    leaderboard,
+    myAssignments,
+    loading,
+    myWorkshops,
+    myRank,
+    myReviews,
+  } = usePrivate();
+  // const [enrolledWorkshops,setEnrolledWorkshops] = useState([]);
+  // const [leaderboardUser,setleaderboardUser] = useState([]);
+  // const [assignments, setAssignments] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  console.log(myAssignments);
+  const enrolledWorkshops = myWorkshops?.workshops || [];
+  const leaderboardUser = myRank?.user_rank || {};
+  const assignments = myAssignments?.assignments || [];
 
   // const [user] = useState({
   //   name: "Rahul Sharma",
@@ -198,61 +216,61 @@ const UserProfile = () => {
   //   role: "student"
   // });
 
-  useEffect(() => {
-    // Fetch enrolled workshops from API or state management
-    const fetchEnrolledWorkshops = async () => {
-      setLoading(true);
-      try {
-        const data = await getMyWorkshops();
-        console.log(data.workshops);
-        setEnrolledWorkshops(data.workshops);
-        // backend ke hisaab se
-      } catch (err) {
-        console.log(err);
-      } finally {
-      }
-    };
+  // useEffect(() => {
+  //   // Fetch enrolled workshops from API or state management
+  //   // const fetchEnrolledWorkshops = async () => {
+  //   //   setLoading(true);
+  //   //   try {
+  //   //     const data = await getMyWorkshops();
+  //   //     console.log(data.workshops);
+  //   //     setEnrolledWorkshops(data.workshops);
+  //   //     // backend ke hisaab se
+  //   //   } catch (err) {
+  //   //     console.log(err);
+  //   //   } finally {
+  //   //   }
+  //   // };
 
 
-    const fetchUserRank = async () => {
-      setLoading(true);
-      try {
-        const data = await getMyRank();
-        console.log(data.data.user_rank);
-        setleaderboardUser(data.data.user_rank);
-        // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    const fetchAssignments = async () => {
-      setLoading(true);
-      try {
-        const data = await getMyAssignments();
-        console.log(data);
-        setAssignments(data.data.assignments); // backend ke hisaab se
-        const submittedCount = data.data.assignments.filter(
-          (a) => a.status === "submitted",
-        ).length;
+  //   // const fetchUserRank = async () => {
+  //   //   setLoading(true);
+  //   //   try {
+  //   //     const data = await getMyRank();
+  //   //     console.log(data.data.user_rank);
+  //   //     setleaderboardUser(data.data.user_rank);
+  //   //     // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
+  //   //   } catch (err) {
+  //   //     console.log(err);
+  //   //   } finally {
+  //   //     setLoading(false);
+  //   //   }
+  //   // };
+  //   const fetchAssignments = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const data = await getMyAssignments();
+  //       console.log(data);
+  //       setAssignments(data.data.assignments); // backend ke hisaab se
+  //       const submittedCount = data.data.assignments.filter(
+  //         (a) => a.status === "submitted",
+  //       ).length;
 
-        setStats((prev) => ({
-          ...prev,
-          completedAssignments: submittedCount,
-        }));
-        // setleaderboardUser(data.data.user_rank);
-        // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAssignments();
-    fetchEnrolledWorkshops();
-    fetchUserRank();
-  }, []);
+  //       setStats((prev) => ({
+  //         ...prev,
+  //         completedAssignments: submittedCount,
+  //       }));
+  //       // setleaderboardUser(data.data.user_rank);
+  //       // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchAssignments();
+  //   fetchEnrolledWorkshops();
+  //   fetchUserRank();
+  // }, []);
 
   useEffect(() => {
       if (enrolledWorkshops.length > 0) {
@@ -279,6 +297,7 @@ const UserProfile = () => {
 
         setTopTechnologies(techArray);
       }
+
     }, [enrolledWorkshops]);
 
   // User stats from various tables
@@ -289,6 +308,21 @@ const UserProfile = () => {
     reviewsGiven: 0,
     averageRating: 0,
   });
+
+  const averageRating = () => {
+    const reviews = myReviews?.reviews || [];
+    if (reviews.length === 0) return 0; // agar reviews nahi hai
+
+    const total = reviews.reduce((sum, rev) => sum + (rev.rating || 0), 0);
+    return total / reviews.length;
+  };
+  const submittedAssignmentsCount = () => {
+    const assignments = myAssignments?.assignments || [];
+    return assignments.filter(a => a.submit_link).length;
+  };
+
+
+
 
   // Recent activity
   const [recentActivity] = useState([
@@ -437,7 +471,7 @@ const UserProfile = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-3 bg-purple-50 rounded-lg">
                   <div className="text-2xl font-bold text-purple-600">
-                    {stats.completedAssignments}
+                    {submittedAssignmentsCount()}
                   </div>
                   <div className="text-sm text-muted-foreground">
                     Assignments Submitted
@@ -445,7 +479,7 @@ const UserProfile = () => {
                 </div>
                 <div className="text-center p-3 bg-yellow-50 rounded-lg">
                   <div className="text-2xl font-bold text-yellow-600">
-                    {stats.reviewsGiven}
+                    {myReviews?.total_count}
                   </div>
                   <div className="text-sm text-muted-foreground">
                     Reviews Given
@@ -454,7 +488,7 @@ const UserProfile = () => {
               </div>
               <div className="text-center p-3 bg-gray-50 rounded-lg">
                 <div className="text-lg font-bold text-gray-600">
-                  ★ {stats.averageRating}/5.0
+                  ★ {averageRating()}/5.0
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Average Rating Given

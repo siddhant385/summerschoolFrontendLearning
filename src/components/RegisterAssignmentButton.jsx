@@ -12,10 +12,12 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { usePrivate } from "@/context/private"
 import { useState } from "react"
 import { toast } from "sonner"
 
 export function DialogButton({workshopId,ButtonName,submit_link,title}) {
+  const {fetchMyAssignments} = usePrivate();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({
@@ -43,6 +45,7 @@ export function DialogButton({workshopId,ButtonName,submit_link,title}) {
             toast.success(`Successfully submitted Assignent!`);
             setOpen(false); 
             console.log("Assignent Submitted:", data);
+            fetchMyAssignments();
         } catch (err) {
             toast.error(err.detail ? JSON.stringify(err.detail) : "Something went wrong");
             setOpen(false); 

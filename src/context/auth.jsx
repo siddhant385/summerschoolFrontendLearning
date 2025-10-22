@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { supabase } from "@/api/supabaseClient";
 import { useNavigate } from 'react-router-dom';
 import apiClient from '@/api/apiClient';
-import { getSessionItem, removeSessionItem, setSessionItem } from "@/utils/localUtils";
+import { getSessionItem, removeSessionItem, setSessionItem,clearLocalStorage } from "@/utils/localUtils";
 
 export const AuthContext = createContext();
 
@@ -48,140 +48,188 @@ export default function AuthProvider({ children }) {
 
     // Function to fetch existing user data
     const fetchUserData = async () => {
+        setLoading(true);
         try {
             console.log("Fetching user data...");
             const response = await apiClient.get('/users/me');
             console.log("User data fetched:", response.data);
             const userData = response.data.data;
+            console.log(userData)
             setUser(userData);
             setSessionItem("user", userData);
+            setLoading(false);
             return userData;
         } catch (error) {
             console.error("Error fetching user data:", error);
             setUser(null);
             removeSessionItem("user");
+            setLoading(false);
             return null;
+
         }
     };
 
     useEffect(() => {
-        let mounted = true;
+        // setLoading(true);
 
-        const initializeAuth = async () => {
-            try {
-                setLoading(true);
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+            console.log(`AUTH EVENT: ${event}`);
+            if (session) {
+                // Yahan aap apne database se user ka profile data fetch kar sakte hain
+                // Ye ek acchi practice hai ki aap 'auth.users' table ke alawa ek 'profiles' table bhi banayein
                 
-                // Check if we have a current session
-                const { data: { session }, error } = await supabase.auth.getSession();
+                // Note: Hum yahan seedhe session.user ko set kar rahe hain, aap profile bhi fetch kar sakte hain
+                // console.log(user)
                 
-                if (error) {
-                    console.error("Session error:", error);
-                    if (mounted) {
-                        setUser(null);
-                        removeSessionItem("user");
-                    }
-                    return;
+                // 'SIGNED_IN' event par dashboard par redirect karein
+                if (event === 'SIGNED_IN') {
+                    if (session) {
+                        // User was already logged in, just set the user
+                        fetchUserData()
+                        // navigate('/dashboard');
+                    } else {
+                        // New login, create user in backend
+                        const userData = await createUser();
+                        if (userData) {
+                            navigate('/dashboard');
+                        }
+                    };
+                    
                 }
-
-                // If session exists, check if we already have user data
-                if (session?.access_token && mounted) {
-                    // If we already have user data in state, no need to fetch
-                    if (!user) {
-                        await fetchUserData();
-                    }
-                } else if (mounted) {
-                    // No session, clear any stored user data
-                    setUser(null);
-                    removeSessionItem("user");
-                }
-            } catch (error) {
-                console.error("Auth initialization error:", error);
-                if (mounted) {
-                    setUser(null);
-                    removeSessionItem("user");
-                }
-            } finally {
-                if (mounted) {
-                    setLoading(false);
-                }
+             } else {
+                // Agar session nahi hai (user logged out hai)
+                setUser(null);
+                // const userData = await createUser();
+                removeSessionItem("user"); // Agar aap session storage use kar rahe hain
+                // navigate('/');
             }
-        };
+            setLoading(false);
+        });
 
-        initializeAuth();
+
+
+
+
+        // const initializeAuth = async () => {
+        //     try {
+        //         setLoading(true);
+                
+        //         // Check if we have a current session
+        //         console.log("checking session")
+        //         const { data, error } = await supabase.auth.getSession();
+        //         console.log(data.session)
+        //         let session = data.session
+        //         // const {data, error} = supabase.auth.getSession();
+        //         // console.log(data,error)
+                
+        //         if (error) {
+        //             console.error("Session error:", error);
+        //             if (mounted) {
+        //                 setUser(null);
+        //                 removeSessionItem("user");
+        //             }
+        //             return;
+        //         }
+
+        //         // If session exists, check if we already have user data
+        //         if (session?.access_token && mounted) {
+        //             // If we already have user data in state, no need to fetch
+        //             if (!user) {
+        //                 await fetchUserData();
+        //             }
+        //         } else if (mounted) {
+        //             // No session, clear any stored user data
+        //             setUser(null);
+        //             removeSessionItem("user");
+        //         }
+        //     } catch (error) {
+        //         console.error("Auth initialization error:", error);
+        //         if (mounted) {
+        //             setUser(null);
+        //             removeSessionItem("user");
+        //         }
+        //     } finally {
+        //         if (mounted) {
+        //             setLoading(false);
+        //         }
+        //     }
+        // };
+
+        // initializeAuth();
 
         // Set up auth state listener
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            async (event, session) => {
-                if (!mounted) return;
+        // const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        //     async (event, session) => {
+        //         if (!mounted) return;
 
-                console.log("Auth event:", event);
+        //         console.log("Auth event:", event);
                 
-                try {
-                    switch (event) {
-                        case 'SIGNED_IN':
-                            setLoading(true);
-                            if (session?.access_token) {
-                                // Check if user was already logged in (stored in localStorage)
-                                const storedUser = getSessionItem("user");
-                                if (storedUser) {
-                                    // User was already logged in, just set the user
-                                    setUser(storedUser);
-                                    navigate('/dashboard');
-                                } else {
-                                    // New login, create user in backend
-                                    const userData = await createUser();
-                                    if (userData) {
-                                        navigate('/dashboard');
-                                    }
-                                }
-                            }
-                            setLoading(false);
-                            break;
-                        case 'TOKEN_REFRESHED':
-                            // On token refresh, just fetch user data if we don't have it
-                            if (session?.access_token && !user) {
-                                await fetchUserData();
-                            }
-                            break;
+        //         try {
+        //             switch (event) {
+        //                 case 'SIGNED_IN':
+        //                     setLoading(true);
+        //                     if (session?.access_token) {
+        //                         // Check if user was already logged in (stored in localStorage)
+        //                         const storedUser = getSessionItem("user");
+        //                         if (storedUser) {
+        //                             // User was already logged in, just set the user
+        //                             setUser(storedUser);
+        //                             navigate('/dashboard');
+        //                         } else {
+        //                             // New login, create user in backend
+        //                             const userData = await createUser();
+        //                             if (userData) {
+        //                                 navigate('/dashboard');
+        //                             }
+        //                         }
+        //                     }
+        //                     setLoading(false);
+        //                     break;
+        //                 case 'TOKEN_REFRESHED':
+        //                     // On token refresh, just fetch user data if we don't have it
+        //                     if (session?.access_token && !user) {
+        //                         await fetchUserData();
+        //                     }
+        //                     break;
 
-                        case 'SIGNED_OUT':
-                            setUser(null);
-                            removeSessionItem("user");
-                            navigate('/');
-                            break;
+        //                 case 'SIGNED_OUT':
+        //                     setUser(null);
+        //                     removeSessionItem("user");
+        //                     navigate('/');
+        //                     break;
 
-                        case 'PASSWORD_RECOVERY':
-                            console.log("Password recovery initiated");
-                            break;
+        //                 case 'PASSWORD_RECOVERY':
+        //                     console.log("Password recovery initiated");
+        //                     break;
 
-                        case 'USER_UPDATED':
-                            console.log("User updated");
-                            if (session?.access_token) {
-                                await fetchUserData();
-                            }
-                            break;
+        //                 case 'USER_UPDATED':
+        //                     console.log("User updated");
+        //                     if (session?.access_token) {
+        //                         await fetchUserData();
+        //                     }
+        //                     break;
 
-                        default:
-                            // Handle INITIAL_SESSION or other events
-                            if (session?.access_token) {
-                                await fetchUserData();
-                            } else {
-                                setUser(null);
-                                removeSessionItem("user");
-                            }
-                            break;
-                    }
-                } catch (error) {
-                    console.error("Auth state change error:", error);
-                    setUser(null);
-                    removeSessionItem("user");
-                }
-            }
-        );
+        //                 default:
+        //                     // Handle INITIAL_SESSION or other events
+        //                     if (session?.access_token) {
+        //                         await fetchUserData();
+        //                     } else {
+        //                         setUser(null);
+        //                         removeSessionItem("user");
+        //                     }
+        //                     break;
+        //             }
+        //         } catch (error) {
+        //             console.error("Auth state change error:", error);
+        //             setUser(null);
+        //             removeSessionItem("user");
+        //         }
+        //     }
+        // );
 
         // Cleanup function
         return () => {
-            mounted = false;
+            // mounted = false;
             subscription?.unsubscribe();
         };
     }, [navigate]);
@@ -211,6 +259,7 @@ export default function AuthProvider({ children }) {
     const logout = async () => {
         try {
             setLoading(true);
+            clearLocalStorage();
             const { error } = await supabase.auth.signOut();
             
             if (error) {

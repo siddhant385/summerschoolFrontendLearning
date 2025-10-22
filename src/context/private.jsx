@@ -28,10 +28,10 @@ export const PrivateProvider = ({ children }) => {
       setLoading(true);
       try {
         // yaha tu params de sakta hai
-        const data = await getLeaderboard(20, 0, 0, "all_time"); 
+        const data = await getLeaderboard(); 
+        console.log(data)
         setLeaderboard(data.data); // backend ke hisaab se
-        setLocalItem("leaderboard",data.data)
-        
+        setLocalItem("leaderboard",data.data);
 
       } catch (err) {
         setError(err);
@@ -39,6 +39,45 @@ export const PrivateProvider = ({ children }) => {
         setLoading(false);
       }
     };
+
+  const fetchmyReviews = async () => {
+    setLoading(true);
+    try {
+      const data = await getMyReviews();
+      setMyReviews(data.data);
+      setLocalItem("myReviews",data.data);
+    }catch(err){
+      setError(err);
+    }finally{
+      setLoading(false);
+    }
+  };
+
+  const fetchMyAssignments = async () => {
+    setLoading(true);
+    try {
+      const data = await getMyAssignments();
+      setMyAssignments(data.data);
+      setLocalItem("myAssignments", data.data);
+    }catch(err){
+      setError(err);
+    }finally{
+      setLoading(false);
+    }
+  };
+
+  const fetchMyWorkshops = async () => {
+    setLoading(true);
+    try {
+      const data = await getMyWorkshops();
+      setMyWorkshops(data);
+      setLocalItem("myWorkshops",data);
+    }catch(err){
+      setError(err);
+    }finally{
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     let isActive = true;
@@ -74,7 +113,7 @@ export const PrivateProvider = ({ children }) => {
           setLocalItem("leaderboard", leaderboardData.data);
           setLocalItem("myRank", rankData.data);
           setLocalItem("myAssignments", assignmentsData.data);
-          setLocalItem("myReviews", reviewsData.data.reviews);
+          setLocalItem("myReviews", reviewsData.data);
 
 
 
@@ -108,6 +147,9 @@ export const PrivateProvider = ({ children }) => {
     profileStatus,
     leaderboard,
     fetchLeaderboardData,
+    fetchmyReviews,
+    fetchMyWorkshops,
+    fetchMyAssignments,
     error,
     myRank,
     myAssignments,

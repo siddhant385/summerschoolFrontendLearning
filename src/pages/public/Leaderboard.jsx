@@ -140,7 +140,7 @@ const LeaderboardPage = () => {
     return isLoggedIn ? leaderboardData?.entries : GuestleaderData.top_three;
   }; leaderboardData
 
-  if (!leaderboard) {
+  if (!getLeaderboardUsers()) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">

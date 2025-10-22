@@ -16,8 +16,10 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { toast } from "sonner"
 import { Star } from "lucide-react"   // ✅ Add this line
+import { usePrivate } from "@/context/private"
 
 export function ReviewButton({ ButtonName, workshopId,Edit,review_id}) {
+  const {fetchmyReviews} = usePrivate();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   console.log(workshopId)
@@ -42,6 +44,7 @@ export function ReviewButton({ ButtonName, workshopId,Edit,review_id}) {
       const data = await submitReview(workshopId, formData);
       toast.success(`Successfully submitted Review!`);
       setOpen(false);
+      fetchmyReviews();
       console.log("Review Submitted:", data);
     } catch (err) {
       toast.error(err.detail ? JSON.stringify(err.detail) : "Something went wrong");
@@ -59,6 +62,7 @@ export function ReviewButton({ ButtonName, workshopId,Edit,review_id}) {
       const data = await updateReview(review_id, formData);
       toast.success(`Successfully submitted Review!`);
       setOpen(false);
+      fetchmyReviews();
       console.log("Review Submitted:", data);
     } catch (err) {
       toast.error(err.detail ? JSON.stringify(err.detail) : "Something went wrong");
