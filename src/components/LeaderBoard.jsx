@@ -34,7 +34,7 @@ export const Leaderboard = ({
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className=" w-full max-w-2xl mx-auto">
       <CardHeader className="text-center pb-4">
         <CardTitle className="text-xl md:text-2xl font-bold">{title}</CardTitle>
       </CardHeader>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { WorkshopCard } from "@/components/WorkshopCard";
 import { Input } from "@/components/ui/input";
 import { usePublic } from '@/context/public';
-
+import bg from '@/assets/images/bg.jpg'
 
 export default function WorkshopList() {
   const { workshops, loading, error, fetchWorkshops } = usePublic();
@@ -23,7 +23,7 @@ export default function WorkshopList() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="p-4">
+    <div className="p-4 py-9 max-sm:py-7 bgg-blackk overflow-y-scroll w-[100vw] mx-auto px-10">
       {/* Filters */}
       <div className="flex gap-2 mb-4">
         <Input
@@ -62,6 +62,34 @@ export default function WorkshopList() {
           <p>No workshops found.</p>
         )}
       </div>
+
+
+      <style jsx>{`
+            .bgg-blackk {
+          background-size: cover;
+          background-image: url(${bg});
+          background-attachment: fixed;
+          // background-size: cover;
+          background-repeat: no-repeat;
+      }
+      
+      
+      
+      /* Hides scrollbar but allows scrolling */
+      ::-webkit-scrollbar {
+          display: none;
+      }
+      
+      html {
+          scrollbar-width: none;
+      }
+      
+      body {
+          -ms-overflow-style: none;
+      }
+            `}</style>
     </div>
+
+    
   );
 }

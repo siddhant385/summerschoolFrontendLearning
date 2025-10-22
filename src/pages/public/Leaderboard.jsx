@@ -7,6 +7,7 @@ import { getLeaderboard, getTopPerformers } from '@/api/leaderboardapi';
 import { useAuth } from '@/context/auth';
 import { usePublic } from '@/context/public';
 import { usePrivate } from '@/context/private';
+import bg from '@/assets/images/bg.jpg'
 
 const LeaderboardPage = () => {
   const { user } = useAuth();
@@ -63,7 +64,7 @@ const LeaderboardPage = () => {
     if (isLoggedIn) {
       // Logged in user stats
       return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 ">
           <Card >
             <CardContent className="p-4 text-center">
               <Users className="h-6 w-6 mx-auto mb-2 text-blue-500" />
@@ -168,7 +169,7 @@ const LeaderboardPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background p-4">
+    <div className="min-h-screen p-4">
       <div className="max-w-4xl mx-auto">
         {/* Page Header */}
         <div className="text-center mb-8">
@@ -194,7 +195,7 @@ const LeaderboardPage = () => {
 
         {/* Login Prompt for Guests */}
         {!isLoggedIn && (
-          <Card className="mt-10 w-[40%] mx-auto border-dashed">
+          <Card className="mt-10  w-[40%] mx-auto border-dashed">
             <CardContent className="p-1 text-center">
               <p className="text-muted-foreground text-sm mb-4">
                 Want to see the full leaderboard and your rank?

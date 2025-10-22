@@ -15,7 +15,7 @@ export default function Component() {
 
       <Updated_Navbar />
 
-      <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900 pt-12">
+      <div className="flex flex-col h-screen bg-gray-50 dark:bg-black pt-12">
         {/* Go Back Button */}
 
         {/* Main Content */}

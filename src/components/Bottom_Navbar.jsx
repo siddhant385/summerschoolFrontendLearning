@@ -115,7 +115,7 @@ const Bottom_Navbar = () => {
     transform: translateX(-50%);
     width: 90%;
     max-width: 500px;
-    height: 55px;   /* reduced height */
+    height: 60px;   /* reduced height */
     background-color: rgba(255, 253, 253, 0.1); 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);

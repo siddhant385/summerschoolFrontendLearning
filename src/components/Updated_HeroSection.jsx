@@ -49,7 +49,7 @@ useGSAP(() => {
             {/* <!-- ====content==== --> */}
             <div className="content">
                 <div>
-                    <p className="jlug-summer mb-7 whitespace-nowrap">JLUG SUMMER</p>
+                    <p className="jlug-summer whitespace-nowrap">JLUG SUMMER</p>
                 </div>
                 <div>
                     <p className="school-program">SCHOOL PROGRAM</p>
@@ -413,7 +413,7 @@ text-transform: uppercase;
         padding-top: 10px;
     }
     .jlug-summer {
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.05rem;
          letter-spacing:5px;
     }
     .message {
