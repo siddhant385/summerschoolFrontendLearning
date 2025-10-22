@@ -197,7 +197,8 @@ const WorkshopDashboard = () => {
     <div className="min-h-screen bg-background p-3 md:p-6 bgg-blackk overflow-y-scroll w-[100vw] mx-auto px-10">
       <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
         {/* Header Section - Mobile Responsive */}
-        <Card className="w-full max-w-md md:max-w-4xl mx-auto">
+        <Card className="max-md:mt-4 max-sm:mt-4">
+
 
 
           <CardContent className="pt-4 md:pt-6">
