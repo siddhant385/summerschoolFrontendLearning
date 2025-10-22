@@ -13,7 +13,7 @@ const About = () => {
 
                     {/* <!-- Top Heading and Paragraph --> */}
 
-                    <div class="text-center space-y-12">
+                    <div class="text-center space-y-8">
                         <h1 class="text-3xl md:text-5xl lg:text-6xl text-gray-400 font-medium font-rosario" data-aos-duration="700">ABOUT THE PROGRAM
                         </h1>
                         <p class="text-sm mt-6 text-[#a2a2a2] font-inter leading-relaxed" data-aos-duration="700">
@@ -24,11 +24,11 @@ const About = () => {
 
                     {/* <!-- Cards Section --> */}
 
-                    <div class="space-y-6 md:grid md:grid-cols-2 md:justify-items-center md:gap-4">
+                    <div class=" md:grid md:grid-cols-2 max-md:space-y-3 md:justify-items-center md:gap-4">
 
                         {/* <!-- Expert Mentorship (slide from left) --> */}
 
-                        <div class="bg-[#33475b] text-white px-6 py-8 rounded-xl shadow-md text-center space-y-4 md:" >
+                        <div class="bg-[#33475b] text-white px-6 py-8 rounded-xl shadow-md text-center space-y-4" >
                             <div class="text-3xl">
                                 <img src={mentorship} alt="" class="mx-auto w-10 h-10" />
                             </div>

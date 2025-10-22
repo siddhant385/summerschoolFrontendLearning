@@ -4,7 +4,7 @@ const FeedbackSection = () => {
     return (
         <>
             <div class="containerr">
-                <header className='whitespace-nowrap'>J L U G</header>
+                <header>J L U G</header>
                 <div class="subheading">
                     Empowering the next generation of technologists
                     <br />
@@ -13,36 +13,38 @@ const FeedbackSection = () => {
 
 
 
-                <section class="feedback-wrapper">
-                    <div class="feedback-box">
-                        <div class="rate">
-                            <h2>RATE&nbsp;&nbsp;YOUR&nbsp;&nbsp;EXPERIENCE</h2>
-                            <p>Help us to improve by sharing your feedback</p>
+            <section class="feedback-wrapper">
+              <div class="feedback-box">
+                <div class="rate">
+                  <h2>RATE&nbsp;&nbsp;YOUR&nbsp;&nbsp;EXPERIENCE</h2>
+                  <p>Help us to improve by sharing your feedback</p>
 
-                            <div class="card-box">
-                                <div class="slider">
-                                    <div class="card">“I love your workshop...”<div class="photo"><img src="pfp.jpg" alt="image" />  </div><div class="name">Aman Kaur</div><div class="time">2 min ago</div></div>
-                                    <div class="card">“The hands-on sessions...”<div class="photo"><img src="link here" alt="image" />  </div><div class="name">Rahul Verma</div><div class="time">5 min ago</div></div>
-                                    <div class="card">“Amazing mentors...”<div class="photo"><img src="link here" alt="image" /></div>  <div class="name">Priya Singh</div><div class="time">10 min ago</div></div>
-                                </div>
-                            </div>
-                            <button class="add-btn">Add Yours</button>
-
-                        </div>
+                  <div class="card-box">
+                    <div class="slider">
+                      <div class="card">“I love your workshop...”<div class="photo"><img src="pfp.jpg" alt="image" />  </div><div class="name">Aman Kaur</div><div class="time">2 min ago</div></div>
+                      <div class="card">“The hands-on sessions...”<div class="photo"><img src="link here" alt="image" />  </div><div class="name">Rahul Verma</div><div class="time">5 min ago</div></div>
+                      <div class="card">“Amazing mentors...”<div class="photo"><img src="link here" alt="image" /></div>  <div class="name">Priya Singh</div><div class="time">10 min ago</div></div>
                     </div>
-                </section>
+                  </div>
+                  <button class="add-btn">Add Yours</button>
+
+                </div>
+              </div>
+            </section>
+
 
             </div>
 
             <style jsx>{`@import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
+
 .containerr {
   flex: 1;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 2rem 1rem 6rem;
+  max-width: 70%;
+  // width: 100%;
+  margin: 0 auto 100px;
+  padding: 2rem 1rem;
   height: auto;
   position: relative;
   z-index: 1;
@@ -79,6 +81,7 @@ header {
 
 .feedback-wrapper {
   display: flex;
+  width:30%;
   justify-content: center;
 }
 
@@ -87,16 +90,16 @@ header {
   border: 0.1px #919191 solid;
   border-radius: 16px;
   box-shadow: #888;
-  padding: 2rem 4rem 2rem;
-  width: 125%;
+  padding: 1.5rem;
+  width: 150%;
   background-color: #111;
-  display: flex;
+  // display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;
-  height: auto;
+  height: 350px;
   box-sizing: border-box;
   gap: 1rem;
 }
@@ -127,7 +130,7 @@ header {
 
 
 .rate h2 {
-  font-size: 22px;
+  font-size: 12px;
   letter-spacing: 0.1rem;
   margin: 0;
 }
@@ -208,7 +211,7 @@ header {
 
 .add-btn {
   height: 32px;
-  padding:0 1rem ;
+  padding: 0 1rem;
   border: 1px solid #919191;
   background: #919191;
   color: white;
@@ -218,7 +221,7 @@ header {
   border-radius: 6px;
   margin-top: 0.5rem;
   align-self: center;
-  }
+}
 
 
 
@@ -246,15 +249,12 @@ header {
 
 
 
+
+
 @media (max-width: 600px) {
   .feedback-box {
     height: auto;
-    padding: 3rem;
   }
-
-  .rate h2 {
-  font-size: 12px;
-            }
 
 
   .slider {
@@ -270,13 +270,11 @@ header {
 
   .add-btn {
     width: 55%;
-    white-space:nowrap;
     margin-top: 1rem;
-    padding:0;
   }
 }
 
-`}</style>
+}`}</style>
 
         </>
     )

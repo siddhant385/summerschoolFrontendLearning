@@ -15,7 +15,6 @@ import { Button } from "./ui/button";
 import { UserWorkShopRegister } from "@/api/userworkshopapi";
 import { useState } from "react";
 import { toast } from "sonner"
-import { ReviewButton } from "./ReviewButton";
 
 export const WorkshopCard = ({ workshop,isUserGiven }) => {
   const { user } = useAuth();
@@ -85,11 +84,6 @@ export const WorkshopCard = ({ workshop,isUserGiven }) => {
             </Button> :
               <RegisterButton workshopId={workshop.id} />
           )}
-          {/*{console.log(workshop.workshop_id)}*/}
-          {isEnrolled && !is_upcoming && workshop? 
-           <ReviewButton workshopId={workshop.workshop_id} ButtonName="Submit Review" />:""
-        }
-
           
 
         </CardFooter>
