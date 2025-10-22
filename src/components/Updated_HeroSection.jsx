@@ -8,8 +8,14 @@ import jlug_mainlogo from '../assets/images/jlug_mainlogo.jpg'
 import register_icon from '../assets/images/register_icon.png'
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+  const navigate=useNavigate();
+
+  const startLearningClick=()=>{
+    navigate("/workshops");
+  }
 useGSAP(() => {
     gsap.from(".button .btnsvg", {
       x: 170, // smaller value for flexible movement
@@ -104,7 +110,7 @@ useGSAP(() => {
               </defs>
             </svg>
           </div>
-          <div className="btnTitle font-Inter">Start Learning</div>
+          <div className="btnTitle font-Inter" onClick={startLearningClick}>Start Learning</div>
         </div>
             </div>
 
