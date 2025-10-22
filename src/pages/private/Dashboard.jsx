@@ -28,6 +28,7 @@ import AssignmentCard from "@/components/AssignmentCard";
 import { usePrivate } from "@/context/private";
 import { ReviewButton } from "@/components/ReviewButton";
 import { useEffect } from "react";
+import bg from '@/assets/images/bg.jpg'
 
 const WorkshopDashboard = () => {
   // Sample data based on your schema
@@ -194,10 +195,10 @@ const WorkshopDashboard = () => {
     ));
   };
   return (
-    <div className="min-h-screen bg-background p-3 md:p-6">
+    <div className="min-h-screen bg-background p-3 md:p-6 bgg-blackk overflow-y-scroll w-[100vw] mx-auto px-10">
       <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
         {/* Header Section - Mobile Responsive */}
-        <Card>
+        <Card className="max-md:mt-4 max-sm:mt-4">
           <CardContent className="pt-4 md:pt-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
               <div className="flex items-center space-x-3 md:space-x-4">
@@ -409,6 +410,33 @@ const WorkshopDashboard = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+
+     <style jsx>{`
+           .bgg-blackk {
+         background-size: cover;
+         background-image: url(${bg});
+         background-attachment: fixed;
+         // background-size: cover;
+         background-repeat: no-repeat;
+        
+     }
+     
+     
+     
+     /* Hides scrollbar but allows scrolling */
+     ::-webkit-scrollbar {
+         display: none;
+     }
+     
+     html {
+         scrollbar-width: none;
+     }
+     
+     body {
+         -ms-overflow-style: none;
+     }
+           `}</style>
     </div>
   );
 };

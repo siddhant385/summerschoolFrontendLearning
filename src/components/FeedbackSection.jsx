@@ -27,7 +27,7 @@ const FeedbackSection = () => {
                                     <div className="card">“Amazing mentors...”<div className="photo"><img src="link here" alt="image" /></div>  <div className="name">Priya Singh</div><div className="time">10 min ago</div></div>
                                 </div>
                             </div>
-                            <button className="add-btn">Add Yours</button>
+                            {/* <button className="add-btn">Add Yours</button> */}
 
                         </div>
                     </div>
