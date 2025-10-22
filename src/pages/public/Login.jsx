@@ -4,6 +4,7 @@ import { AuthContext } from "@/context/auth" // path adjust kar le
 import { useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 import Updated_Navbar from '@/components/Updated_Navbar'
+import bg from '@/assets/images/bg.jpg'
 
 export default function Component() {
   const { loginWithGoogle, user, loading } = useContext(AuthContext)
@@ -15,7 +16,7 @@ export default function Component() {
 
       <Updated_Navbar />
 
-      <div className="flex flex-col h-screen bg-gray-50 dark:bg-black pt-12">
+      <div className="flex flex-col h-screen bg-gray-50 bgg-blackk overflow-y-scroll w-[100vw] mx-auto ">
         {/* Go Back Button */}
 
         {/* Main Content */}
@@ -64,6 +65,31 @@ export default function Component() {
             Go Back
           </Button>
         </div>
+
+         <style jsx>{`
+              .bgg-blackk {
+            background-size: cover;
+            background-image: url(${bg});
+            background-attachment: fixed;
+            // background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
+        
+        
+        /* Hides scrollbar but allows scrolling */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        html {
+            scrollbar-width: none;
+        }
+        
+        body {
+            -ms-overflow-style: none;
+        }
+              `}</style>
       </div>
     </>
 
