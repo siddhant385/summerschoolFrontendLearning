@@ -25,7 +25,7 @@ export default function AssignmentCard({ assignment }) {
         });
     };
     return (
-        <Card key={assignment.id}>
+        <Card key={assignment.id} className="w-full max-w-md md:max-w-none mx-auto">
             <CardHeader className="pb-3">
                 <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:items-start md:space-y-0">
                     <div>
