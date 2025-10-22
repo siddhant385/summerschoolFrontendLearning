@@ -8,6 +8,7 @@ import React, { useState, useEffect } from "react";
 import About from "@/components/About";
 import FeedbackSection from "@/components/FeedbackSection";
 import { usePublic } from "@/context/public";
+import bg from '@/assets/images/bg.jpg'
 
 const Home = () => {
   // const [workshops, setWorkshops] = useState([]);
@@ -60,12 +61,12 @@ const Home = () => {
 
   return (
     <>
-      <div className=" mx-auto p-4">
-        <div className="mt-5">
+      <div className="bgg-blackk overflow-y-scroll w-[100vw] mx-auto px-10">
+        <div className="h-[100vh]  pt-[8vh]">
           <Updated_HeroSection />
         </div>
 
-        <div className="mt-10">
+        <div className="">
           <HeroSection {...workshopStats} />
         </div>
 
@@ -119,9 +120,30 @@ const Home = () => {
         <FeedbackSection />
       </div>
 
-      {/*   <style jsx>{`
-     
-      `}</style>*/}
+      <style jsx>{`
+      .bgg-blackk {
+    background-size: cover;
+    background-image: url(${bg});
+    background-attachment: fixed;
+    // background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+
+/* Hides scrollbar but allows scrolling */
+::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    scrollbar-width: none;
+}
+
+body {
+    -ms-overflow-style: none;
+}
+      `}</style>
     </>
   );
 };

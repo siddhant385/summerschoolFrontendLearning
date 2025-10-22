@@ -18,6 +18,7 @@ import { toast } from "sonner"
 import { ReviewButton } from "./ReviewButton";
 import { usePrivate } from "@/context/private";
 
+
 export const WorkshopCard = ({ workshop,isUserGiven }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -89,11 +90,6 @@ export const WorkshopCard = ({ workshop,isUserGiven }) => {
             </Button> :
               <RegisterButton workshopId={workshop.id} />
           )}
-          {/*{console.log(workshop.workshop_id)}*/}
-          {isEnrolled && !is_upcoming && workshop? 
-           <ReviewButton workshopId={workshop.workshop_id} ButtonName="Submit Review" />:""
-        }
-
           
 
         </CardFooter>
