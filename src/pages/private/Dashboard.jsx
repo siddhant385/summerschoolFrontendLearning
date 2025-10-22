@@ -59,10 +59,9 @@ const WorkshopDashboard = () => {
   //   profile_complete: true,
   //   rank: 5 // From leaderboard calculation
   // });
-    useEffect(() =>{
-      fetchmyReviews();
-
-    },[]);
+  useEffect(() => {
+    fetchmyReviews();
+  }, []);
   // useEffect(() => {
   //   // Fetch enrolled workshops from API or state management
   //   const fetchEnrolledWorkshops = async () => {
@@ -197,40 +196,46 @@ const WorkshopDashboard = () => {
     <div className="min-h-screen bg-background p-3 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
         {/* Header Section - Mobile Responsive */}
-        <Card>
+        <Card className="w-full max-w-md md:max-w-4xl mx-auto">
           <CardContent className="pt-4 md:pt-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-              <div className="flex items-center space-x-3 md:space-x-4">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-6 md:space-y-0">
+              {/* User Info Section */}
+              <div className="flex flex-wrap items-center gap-3 md:gap-4">
                 <Avatar className="w-12 h-12 md:w-16 md:h-16">
                   <AvatarImage src={user.profile_pic_url} alt={user.name} />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
+
                 <div className="mx-2 md:mx-4">
-                  <h1 className="text-xl md:text-2xl font-bold my-1">
+                  <h1 className="text-xl md:text-2xl font-bold my-1 break-words">
                     {user.name}
                   </h1>
-                  <p className="text-sm md:text-base text-muted-foreground my-1">
+                  <p className="text-sm md:text-base text-muted-foreground my-1 break-all">
                     {user.email}
                   </p>
-                  <div className="grid gap-1 md:gap-0 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 my-1">
+
+                  {/* Badges Section */}
+                  <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 my-2">
                     <Badge
                       variant="secondary"
-                      className="bg-blue-100 text-blue-800 text-xs md:text-sm"
+                      className="bg-blue-100 text-blue-800 text-xs md:text-sm truncate"
                     >
                       {user.points} Points
                     </Badge>
+
                     <Badge
                       variant="outline"
-                      className="bg-yellow-50 text-yellow-800 text-xs md:text-sm"
+                      className="bg-yellow-50 text-yellow-800 text-xs md:text-sm flex items-center justify-center truncate"
                     >
-                      <Trophy className="w-3 h-3 mr-1" />
+                      <Trophy className="w-3 h-3 mr-1 shrink-0" />
                       Rank #{leaderboardUser.rank}
                     </Badge>
+
                     <Badge
                       variant={
                         user.profile_complete ? "default" : "destructive"
                       }
-                      className="text-xs md:text-sm"
+                      className="text-xs md:text-sm truncate"
                     >
                       Profile{" "}
                       {user.profile_complete ? "Complete" : "Incomplete"}
@@ -239,8 +244,8 @@ const WorkshopDashboard = () => {
                 </div>
               </div>
 
-              {/* Quick Stats - Mobile Responsive */}
-              <div className="grid grid-cols-3 gap-3 md:gap-6 text-center">
+              {/* Quick Stats Section */}
+              <div className="grid grid-cols-3 gap-3 md:gap-6 text-center w-full min-w-[240px]">
                 <div className="space-y-1">
                   <div className="text-xl md:text-2xl font-bold text-primary">
                     {enrolledWorkshops.length}
@@ -249,6 +254,7 @@ const WorkshopDashboard = () => {
                     Workshops
                   </div>
                 </div>
+
                 <div className="space-y-1">
                   <div className="text-xl md:text-2xl font-bold text-green-600">
                     {certificates.length}
@@ -257,6 +263,7 @@ const WorkshopDashboard = () => {
                     Certificates
                   </div>
                 </div>
+
                 <div className="space-y-1">
                   <div className="text-xl md:text-2xl font-bold text-purple-600">
                     {myReviews?.total_count}
@@ -402,7 +409,6 @@ const WorkshopDashboard = () => {
             ) : (
               <p className="text-center text-muted-foreground">
                 {console.log(myReviews)}
-
                 No reviews yet 😶
               </p>
             )}
