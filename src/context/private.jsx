@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
 import { getMyWorkshops } from '@/api/userworkshopapi';
 import { getMyProfile, getMyProfileStatus } from '@/api/userapi';
 import { getLeaderboard, getMyRank } from '@/api/leaderboardapi';
@@ -24,12 +24,11 @@ export const PrivateProvider = ({ children }) => {
   const [myReviews, setMyReviews] = useState(getLocalItem("myReviews"));
 
 
-  const fetchLeaderboardData = async () => {
+  const fetchLeaderboardData = useCallback(async () => {
       setLoading(true);
       try {
         // yaha tu params de sakta hai
         const data = await getLeaderboard(); 
-        console.log(data)
         setLeaderboard(data.data); // backend ke hisaab se
         setLocalItem("leaderboard",data.data);
 
@@ -38,9 +37,9 @@ export const PrivateProvider = ({ children }) => {
       } finally {
         setLoading(false);
       }
-    };
+    }, []);
 
-  const fetchmyReviews = async () => {
+  const fetchmyReviews = useCallback(async () => {
     setLoading(true);
     try {
       const data = await getMyReviews();
@@ -51,9 +50,9 @@ export const PrivateProvider = ({ children }) => {
     }finally{
       setLoading(false);
     }
-  };
+  }, []);
 
-  const fetchMyAssignments = async () => {
+  const fetchMyAssignments = useCallback(async () => {
     setLoading(true);
     try {
       const data = await getMyAssignments();
@@ -64,9 +63,9 @@ export const PrivateProvider = ({ children }) => {
     }finally{
       setLoading(false);
     }
-  };
+  }, []);
 
-  const fetchMyWorkshops = async () => {
+  const fetchMyWorkshops = useCallback(async () => {
     setLoading(true);
     try {
       const data = await getMyWorkshops();
@@ -77,7 +76,7 @@ export const PrivateProvider = ({ children }) => {
     }finally{
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     let isActive = true;
