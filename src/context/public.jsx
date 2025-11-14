@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
 import { useAuth } from './auth';
 import { setLocalItem, getLocalItem } from '@/utils/localUtils';
 import { getWorkshops,getWorkshopsStats,getUpcomingWorkshops } from '@/api/workshopapi';
@@ -19,8 +19,8 @@ export const PublicProvider = ({ children }) => {
   const [upcomingWorkshops,setUpComingWorkshops] = useState(getLocalItem("upcomingWorkshops") || []);
   const [topPerformer,setTopPerformer] = useState(getLocalItem("topPerformer") || []);
 
-  // Generic fetch function (dynamic filters)
-  const fetchWorkshops = async ({ search, technology, instructor, page = 1, page_size = 20 } = {}) => {
+  // Generic fetch function (dynamic filters) - memoized to prevent unnecessary re-renders
+  const fetchWorkshops = useCallback(async ({ search, technology, instructor, page = 1, page_size = 20 } = {}) => {
     setLoading(true);
     setError(null);
 
@@ -33,7 +33,7 @@ export const PublicProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   // Optional: fetch on mount if user exists
   useEffect(() => {

@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Leaderboard } from '@/components/LeaderBoard'
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Trophy, Users, Target } from "lucide-react";
-import { getLeaderboard, getTopPerformers } from '@/api/leaderboardapi';
 import { useAuth } from '@/context/auth';
 import { usePublic } from '@/context/public';
 import { usePrivate } from '@/context/private';
-import bg from '@/assets/images/bg.jpg'
 
 const LeaderboardPage = () => {
   const { user } = useAuth();
   const {topPerformer} = usePublic();
-  const {leaderboard,fetchLeaderboardData,loading,error} = usePrivate();
+  const {leaderboard,fetchLeaderboardData,error} = usePrivate();
   const leaderboardData = leaderboard;
-  // const [GuestleaderData, setGuestleaderData] = useState(null);
   const GuestleaderData = topPerformer;
   
   // Check if user is logged in (you can replace this with your auth logic)
   const isLoggedIn = !!user; // Replace with your auth check
   useEffect(() => {
-    isLoggedIn ? fetchLeaderboardData():console.log("Hello");
-    
-  }, [isLoggedIn]);
+    if (isLoggedIn) {
+      fetchLeaderboardData();
+    }
+  }, [isLoggedIn, fetchLeaderboardData]);
 
       // const fetchLeaderboardData = async () => {
       // setLoading(true);
@@ -104,7 +102,6 @@ const LeaderboardPage = () => {
       return (
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-          {console.log("returning User Data")}
           <Card>
             <CardContent className="p-4 text-center">
               <Users className="h-6 w-6 mx-auto mb-2 text-blue-500" />

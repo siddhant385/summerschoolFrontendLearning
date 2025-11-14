@@ -1,20 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Calendar,
   Award,
   FileText,
   Star,
-  Download,
-  ExternalLink,
-  User,
-  TrendingUp,
-  Settings,
   Trophy,
 } from "lucide-react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -35,141 +29,23 @@ const WorkshopDashboard = () => {
   const { user } = useAuth();
 
   const {
-    leaderboard,
-    myAssignments,
-    loading,
     fetchmyReviews,
     myWorkshops,
     myRank,
     myReviews,
+    myAssignments,
   } = usePrivate();
-  // const [enrolledWorkshops,setEnrolledWorkshops] = useState([]);
-  // const [leaderboardUser,setleaderboardUser] = useState([]);
-  // const [assignments, setAssignments] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  console.log(myReviews);
-  const enrolledWorkshops = myWorkshops?.workshops || [];
-  const leaderboardUser = myRank?.user_rank || {};
-  const assignments = myAssignments?.assignments || [];
 
-  // const [user] = useState({
-  //   name: "Rahul Sharma",
-  //   email: "rahul@example.com",
-  //   profile_pic_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-  //   points: 1250,
-  //   profile_complete: true,
-  //   rank: 5 // From leaderboard calculation
-  // });
-  useEffect(() => {
-    fetchmyReviews();
-  }, []);
-  // useEffect(() => {
-  //   // Fetch enrolled workshops from API or state management
-  //   const fetchEnrolledWorkshops = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const data = await getMyWorkshops();
-  //       console.log(data.workshops)
-  //       setEnrolledWorkshops(data.workshops); // backend ke hisaab se
-
-  //     } catch (err) {
-  //       console.log(err);
-  //     } finally {
-
-  //     }
-  //   };
-
-  //   const fetchUserRank = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const data = await getMyRank();
-  //       console.log(data.data.user_rank)
-  //       setleaderboardUser(data.data.user_rank);
-  //       // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
-
-  //     } catch (err) {
-  //       console.log(err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   const fetchAssignments = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const data = await getMyAssignments();
-  //       console.log(data)
-  //       setAssignments(data.data.assignments); // backend ke hisaab se
-  //       // setleaderboardUser(data.data.user_rank);
-  //       // setEnrolledWorkshops(data.workshops); // backend ke hisaab se
-
-  //     } catch (err) {
-  //       console.log(err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchAssignments();
-  //   fetchEnrolledWorkshops();
-  //   fetchUserRank();
-
-  // }, []);
-
-  // const [enrolledWorkshops] = useState([
-  //   {
-  //     id: 1,
-  //     title: "React Advanced Concepts",
-  //     description: "Deep dive into React hooks, context, and performance optimization",
-  //     technologies: ["React", "JavaScript", "Redux"],
-  //     conducted_by: "Priya Singh",
-  //     scheduled_at: "2025-08-20T10:00:00",
-  //     created_at: "2025-08-01T09:00:00"
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Node.js Backend Development",
-  //     description: "Building scalable backend applications with Node.js and Express",
-  //     technologies: ["Node.js", "Express", "MongoDB"],
-  //     conducted_by: "Amit Kumar",
-  //     scheduled_at: "2025-08-10T14:00:00",
-  //     created_at: "2025-07-15T11:00:00"
-  //   }
-  // ]);
-
-  // const [assignments] = useState([
-  //   {
-  //     id: 1,
-  //     title: "Build Todo App with React Hooks",
-  //     submit_link: "https://github.com/user/react-todo",
-  //     workshop_title: "React Advanced Concepts",
-  //     status: "submitted",
-  //     marks: 85,
-  //     feedback: "Great implementation! Consider adding error handling.",
-  //     created_at: "2025-08-15T16:30:00"
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "REST API with Authentication",
-  //     submit_link: "https://github.com/user/node-api",
-  //     workshop_title: "Node.js Backend Development",
-  //     status: "submitted",
-  //     marks: null,
-  //     feedback: null,
-  //     created_at: "2025-08-12T18:45:00"
-  //   }
-  // ]);
+  // Memoize expensive computations to avoid unnecessary re-calculations
+  const enrolledWorkshops = useMemo(() => myWorkshops?.workshops || [], [myWorkshops]);
+  const leaderboardUser = useMemo(() => myRank?.user_rank || {}, [myRank]);
+  const assignments = useMemo(() => myAssignments?.assignments || [], [myAssignments]);
 
   const [certificates] = useState([]);
 
-  const [reviews] = useState([
-    {
-      id: 1,
-      workshop_title: "JavaScript Fundamentals",
-      rating: 5,
-      review_description:
-        "Excellent workshop! Very clear explanations and practical examples.",
-      created_at: "2025-07-31T14:20:00",
-    },
-  ]);
+  useEffect(() => {
+    fetchmyReviews();
+  }, [fetchmyReviews]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("hi-IN", {
@@ -179,10 +55,6 @@ const WorkshopDashboard = () => {
       hour: "2-digit",
       minute: "2-digit",
     });
-  };
-
-  const isUpcoming = (dateString) => {
-    return new Date(dateString) > new Date();
   };
 
   const renderStars = (rating) => {
@@ -412,7 +284,6 @@ const WorkshopDashboard = () => {
               ))
             ) : (
               <p className="text-center text-muted-foreground">
-                {console.log(myReviews)}
                 No reviews yet 😶
               </p>
             )}

@@ -1,23 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { WorkshopCard } from "@/components/WorkshopCard";
 import { Input } from "@/components/ui/input";
 import { usePublic } from '@/context/public';
 import bg from '@/assets/images/bg.jpg'
 
 export default function WorkshopList() {
-  const { workshops, loading, error, fetchWorkshops } = usePublic();
+  const { workshops, error, fetchWorkshops } = usePublic();
   // Filters
   const [search, setSearch] = useState("");
   const [technology, setTechnology] = useState("");
   const [instructor, setInstructor] = useState("");
   const loadings = false;
 
-
-
-  // Fetch workshops whenever filters change
+  // Debounced fetch to prevent excessive API calls
   useEffect(() => {
-    fetchWorkshops({ search, technology, instructor, page: 1, page_size: 20 });
-  }, [search, technology, instructor]);
+    const timeoutId = setTimeout(() => {
+      fetchWorkshops({ search, technology, instructor, page: 1, page_size: 20 });
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timeoutId);
+  }, [search, technology, instructor, fetchWorkshops]);
 
   // if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
